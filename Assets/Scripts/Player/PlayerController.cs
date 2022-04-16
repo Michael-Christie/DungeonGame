@@ -80,4 +80,9 @@ public class PlayerController : MonoBehaviour
         moveComponent.enabled = false;
         rigidBody.isKinematic = false;
     }
+
+    public void SetPosition(Vector3 _pos)
+    {
+        transform.position = _pos;
+    }
 }

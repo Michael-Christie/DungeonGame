@@ -15,12 +15,13 @@ public class GameSceneController : BaseSceneLoader
 
     public override void OnSceneReady()
     {
-        GameOverMenu.endGameReason = EndGameReason.Completed;
-        MenuManager.Instance.ShowMenu((int)GameConstants.Menus.GameOver);
+        MenuManager.Instance.ShowMenu((int)GameConstants.Menus.GameHud);
     }
 
     public override void OnSceneStart()
     {
+        GameManager.Instance.CancelEndGame();
+
         if (MCDiscordManager.Instance.IsInitialized)
         {
             MCDiscordManager.Instance.SetActivity("Exploring A Dungeon", "");

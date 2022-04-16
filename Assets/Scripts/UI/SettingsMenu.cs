@@ -30,6 +30,8 @@ public class SettingsMenu : MenuBase
 
         contentPanel.transform.localScale = Vector3.zero;
 
+        menuPanel.SetActive(true);
+
         StartCoroutine(PlayShowAnimation());
     }
 
@@ -58,6 +60,8 @@ public class SettingsMenu : MenuBase
 
         fadeGroup.DOFade(0, GameConstants.Animations.fadeTimeShort);
         yield return GameConstants.WaitTimers.waitForFadeShort;
+
+        menuPanel.SetActive(false);
 
         OnHideComplete();
 

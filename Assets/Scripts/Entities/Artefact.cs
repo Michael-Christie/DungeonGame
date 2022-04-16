@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using MC.Core;
 
-public class Artefact : IBaseEntity, IPoolable, IInteractable
+public class Artefact : BaseEntity, IPoolable, IInteractable
 {
     public int PoolID { get { return (int)GameConstants.EntityID.Artefact; } }
 

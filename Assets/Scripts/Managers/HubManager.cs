@@ -65,10 +65,6 @@ public class HubManager : MonoBehaviour
 
     private void StartGame()
     {
-        leftDoor.transform.DOLocalRotate(Vector3.zero, GameConstants.Animations.rotateTime);
-        rightDoor.transform.DOLocalRotate(Vector3.zero, GameConstants.Animations.rotateTime);
-
-
         Debug.Log("Starting Game");
         //Do some animation and then start the game.
         CoreBootLoader.Instance.ChangeSceneCollection((int)GameConstants.SceneCollections.Game);

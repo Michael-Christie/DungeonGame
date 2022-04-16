@@ -5,6 +5,6 @@ using UnityEngine;
 /// <summary>
 /// This is the base entity class that all entities that exist in the game inherit from...
 /// </summary>
-public class IBaseEntity : MonoBehaviour
+public class BaseEntity : MonoBehaviour
 {
 }

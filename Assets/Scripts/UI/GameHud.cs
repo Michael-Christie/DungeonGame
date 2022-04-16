@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using DG.Tweening;
+using System;
 
 public class GameHud : MenuBase
 {
@@ -18,16 +19,22 @@ public class GameHud : MenuBase
 
     }
 
-    protected override IEnumerator PlayHideAnimation()
+    public override void Show(Action _onShowComplete)
     {
+        base.Show(_onShowComplete);
+
+        menuPanel.SetActive(true);
+
         OnShowComplete();
-        yield return null;
     }
 
-    protected override IEnumerator PlayShowAnimation()
+    public override void Hide(Action _onHideComplete)
     {
+        base.Hide(_onHideComplete);
+
+        menuPanel.SetActive(false);
+
         OnHideComplete();
-        yield return null;
     }
 
     /// <summary>

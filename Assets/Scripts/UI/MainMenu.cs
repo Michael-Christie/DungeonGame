@@ -129,6 +129,8 @@ public class MainMenu : MenuBase
         btnSettings.transform.localScale = Vector3.zero;
         bottomBar.transform.localPosition = new Vector3(0, -850, 0);
 
+        menuPanel.SetActive(true);
+
         StartCoroutine(PlayShowAnimation());
     }
 
@@ -136,7 +138,9 @@ public class MainMenu : MenuBase
     {
         base.Hide(_onFinishHide);
 
-        StartCoroutine(PlayHideAnimation());
+        menuPanel.SetActive(false);
+
+        OnHideComplete();
     }
 
     protected override IEnumerator PlayShowAnimation()
@@ -144,7 +148,7 @@ public class MainMenu : MenuBase
         yield return GameConstants.WaitTimers.waitForFade;
 
         title.transform.DOScale(Vector3.one, GameConstants.Animations.scaleTime)
-            .SetEase(Ease.OutBounce);
+                .SetEase(Ease.OutBounce);
         yield return GameConstants.WaitTimers.waitForOneSecond;
 
         bottomBar.transform.DOLocalMoveY(-540F, GameConstants.Animations.moveTime)
@@ -161,11 +165,6 @@ public class MainMenu : MenuBase
         yield return GameConstants.WaitTimers.waitForScale;
 
         OnShowComplete();
-    }
-
-    protected override IEnumerator PlayHideAnimation()
-    {
-        throw new NotImplementedException();
     }
 
     private void OnSettingsClicked()
