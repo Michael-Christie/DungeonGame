@@ -452,7 +452,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 398707ab7b9ecfe49b23ceec5a2988f1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  imgDiscordUser: {fileID: 0}
 --- !u!1 &950883630
 GameObject:
   m_ObjectHideFlags: 0

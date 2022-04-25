@@ -91,7 +91,14 @@ public static class GameConstants
     public enum EntityID
     {
         None = -1,
-        Artefact = 1
+        Artefact = 1,
+        Coins = 2
+    }
+
+    public enum ItemID
+    {
+        Artefact = 1,
+        Coins = 2,
     }
 
     public enum Menus
