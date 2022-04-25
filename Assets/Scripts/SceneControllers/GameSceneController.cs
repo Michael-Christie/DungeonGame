@@ -22,10 +22,6 @@ public class GameSceneController : BaseSceneLoader
     {
         GameManager.Instance.CancelEndGame();
 
-        if (MCDiscordManager.Instance.IsInitialized)
-        {
-            MCDiscordManager.Instance.SetActivity("Exploring A Dungeon", "");
-        }
         StartCoroutine(OpenDoors());
     }
 

@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 using DG.Tweening;
+using MC.DiscordManager;
 
 public enum EndGameReason
 {
@@ -85,7 +86,12 @@ public class GameManager : MonoBehaviour
     public void StartGame()
     {
         startTime = DateTime.UtcNow;
-        endTime = startTime + TimeSpan.FromSeconds(30);
+        endTime = startTime + TimeSpan.FromMinutes(5);
+
+        if (MCDiscordManager.Instance.IsInitialized)
+        {
+            MCDiscordManager.Instance.SetActivity("Exploring A Dungeon", "", startTime.TimeToUnixSeconds(), endTime.TimeToUnixSeconds());
+        }
 
         collectedGoal = false;
 
