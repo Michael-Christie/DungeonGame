@@ -58,6 +58,14 @@ public static class GameConstants
         public static string player = "Player";
     }
 
+    public static class SaveFiles
+    {
+        public static string PlayerOneSave = "/PlayerData1.dat";
+        public static string PlayerTwoSave = "/PlayerData2.dat";
+        public static string PlayerThreeSave = "/PlayerData3.dat";
+        public static string ErrorSave = "/ErrorSave.dat";
+    }
+
     public enum Scenes
     {
         BootLoader = 0,
@@ -105,5 +113,16 @@ public static class GameConstants
     {
         GameHud = 0,
         GameOver = 1,
+        Inventory = 2
+    }
+
+    public enum CharacterTypes
+    {
+        Scout, //Quick movement, Light attack, light defence
+        Heavy, //Slow movement, heavy attack, heavy defence
+        Mage, //Quick movement, ranged attacks, light defence
+        Class4,
+        Class5
+
     }
 }

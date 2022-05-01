@@ -238,17 +238,17 @@ public class MainMenu : MenuBase
     private IEnumerator LoadPlayersData()
     {
         PlayerData _tempData;
-        _tempData = LoadSaveData.LoadData(LoadSaveData.PlayerOneSave);
+        SaveFileHelper.LoadDataXML(GameConstants.SaveFiles.PlayerOneSave, out _tempData);
         ConfigurePlayerSaveCards(0, _tempData);
 
         yield return GameConstants.WaitTimers.waitForPointOne;
 
-        _tempData = LoadSaveData.LoadData(LoadSaveData.PlayerTwoSave);
+        SaveFileHelper.LoadDataXML(GameConstants.SaveFiles.PlayerTwoSave, out _tempData);
         ConfigurePlayerSaveCards(1, _tempData);
 
         yield return GameConstants.WaitTimers.waitForPointOne;
 
-        _tempData = LoadSaveData.LoadData(LoadSaveData.PlayerThreeSave);
+        SaveFileHelper.LoadDataXML(GameConstants.SaveFiles.PlayerThreeSave, out _tempData);
         ConfigurePlayerSaveCards(2, _tempData);
     }
 
@@ -293,7 +293,7 @@ public class MainMenu : MenuBase
         _temp.charType = "Wizard";
         _temp.coin = 100;
 
-        LoadSaveData.SaveData(GetSavePathFromInt(saveSlotSelected), _temp);
+        SaveFileHelper.SaveDataXML(GetSavePathFromInt(saveSlotSelected), _temp);
 
         ConfigurePlayerSaveCards(saveSlotSelected, _temp);
 
@@ -318,7 +318,10 @@ public class MainMenu : MenuBase
     {
         AudioManager.Instance.PlaySoundEffect(GameConstants.SoundClip.ButtonPress);
 
-        GameData.Instance.SetPlayerData(LoadSaveData.LoadData(GetSavePathFromInt(_saveSlot)));
+        PlayerData _player;
+        SaveFileHelper.LoadDataXML(GetSavePathFromInt(_saveSlot), out _player);
+
+        GameData.Instance.SetPlayerData(_player);
 
         CoreBootLoader.Instance.ChangeSceneCollection((int)GameConstants.SceneCollections.HubWorld);
     }
@@ -327,18 +330,18 @@ public class MainMenu : MenuBase
     {
         if (_saveSlot == 0)
         {
-            return LoadSaveData.PlayerOneSave;
+            return GameConstants.SaveFiles.PlayerOneSave;
         }
         else if (_saveSlot == 1)
         {
-            return LoadSaveData.PlayerTwoSave;
+            return GameConstants.SaveFiles.PlayerTwoSave;
         }
         else if (_saveSlot == 2)
         {
-            return LoadSaveData.PlayerThreeSave;
+            return GameConstants.SaveFiles.PlayerThreeSave;
         }
 
         Debug.LogError($"Load Save System | Save slot {_saveSlot} is not in Range", this);
-        return LoadSaveData.ErrorSave;
+        return GameConstants.SaveFiles.ErrorSave;
     }
 }

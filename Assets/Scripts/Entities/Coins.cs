@@ -6,7 +6,7 @@ public class Coins : BaseItem
 {
     public override void OnInteract()
     {
-        //base.OnInteract();
+        base.OnInteract();
         //Add coins somewhere else
     }
 }

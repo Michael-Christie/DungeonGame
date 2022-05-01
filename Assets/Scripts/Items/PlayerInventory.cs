@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -30,7 +31,10 @@ public class PlayerInventory : MonoBehaviour
 {
     public static PlayerInventory Instance { get; private set; }
 
-    [SerializeField] private Inventory[] inventory = new Inventory[25];
+    public Inventory[] Inventory { get; private set; } = new Inventory[25];
+
+    public Action onInventoryUpdate;
+    public Action onHotbarUpdate;
 
     //
     private void Awake()
@@ -40,9 +44,26 @@ public class PlayerInventory : MonoBehaviour
 
     private void Start()
     {
-        for (int i = 0; i < inventory.Length; i++)
+        for (int i = 0; i < Inventory.Length; i++)
         {
-            inventory[i] = new Inventory();
+            Inventory[i] = new Inventory();
+        }
+    }
+
+    private bool tempBool;
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Tab))
+        {
+            if (!tempBool)
+            {
+                MenuManager.Instance.ShowMenu((int)GameConstants.Menus.Inventory);
+            }
+            else
+            {
+                MenuManager.Instance.HideMenu();
+            }
+            tempBool = !tempBool;
         }
     }
 
@@ -50,10 +71,10 @@ public class PlayerInventory : MonoBehaviour
     {
         int _desiredSlot = -1;
 
-        for (int i = 0; i < inventory.Length; i++)
+        for (int i = 0; i < Inventory.Length; i++)
         {
             //find the first empty slot
-            if (inventory[i].IsEmpty)
+            if (Inventory[i].IsEmpty)
             {
                 if (_desiredSlot == -1)
                 {
@@ -62,21 +83,23 @@ public class PlayerInventory : MonoBehaviour
                 continue;
             }
 
-            if (inventory[i].IsFull)
+            if (Inventory[i].IsFull)
             {
                 continue;
             }
 
-            if(inventory[i].itemData == _itemData)
+            if(Inventory[i].itemData == _itemData)
             {
                 //if we can just add the two amounts together, done
-                if (inventory[i].amount + _amount <= inventory[i].itemData.maxStackAmount)
+                if (Inventory[i].amount + _amount <= Inventory[i].itemData.maxStackAmount)
                 {
-                    inventory[i].amount += _amount;
+                    Inventory[i].amount += _amount;
+
+                    onInventoryUpdate?.Invoke();
                     return true;
                 }
                 //else we need to add till the stack is full, and then keep searching for empty space
-                _amount = (inventory[i].amount + _amount) - inventory[i].itemData.maxStackAmount;
+                _amount = (Inventory[i].amount + _amount) - Inventory[i].itemData.maxStackAmount;
             }
         }
 
@@ -86,8 +109,10 @@ public class PlayerInventory : MonoBehaviour
             return false;
         }
 
-        inventory[_desiredSlot].itemData = _itemData;
-        inventory[_desiredSlot].amount = _amount;
+        Inventory[_desiredSlot].itemData = _itemData;
+        Inventory[_desiredSlot].amount = _amount;
+
+        onInventoryUpdate?.Invoke();
 
         return true;
     }
