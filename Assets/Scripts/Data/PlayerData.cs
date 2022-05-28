@@ -3,10 +3,11 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [System.Serializable]
-public class PlayerData 
+public struct PlayerData 
 {
-    public string name;
-    public string charType;
+    public GameConstants.CharacterTypes charType;
 
     public int coin;
+
+    public StatData[] stats;
 }

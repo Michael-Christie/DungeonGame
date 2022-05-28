@@ -1097,6 +1097,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 42b75b868f86ad54e8b36c8c161203d8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  playerClasses:
+  - {fileID: 11400000, guid: f858225fe12e54a43bce05ee6dcc5ee1, type: 2}
+  - {fileID: 11400000, guid: dabf637114c640543af3b8baa4e80efc, type: 2}
+  - {fileID: 11400000, guid: 80a5c0084faf66e43b52a8784ec3676d, type: 2}
+  - {fileID: 11400000, guid: 55e2f96f723745e4b869dbf7edab8598, type: 2}
+  - {fileID: 11400000, guid: 1eac4d817c66861458b4c83c17df6f16, type: 2}
 --- !u!1001 &326545218
 PrefabInstance:
   m_ObjectHideFlags: 0

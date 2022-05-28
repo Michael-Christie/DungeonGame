@@ -6,9 +6,13 @@ using MC.DiscordManager;
 
 public class HubSceneController : BaseSceneLoader
 {
+    [SerializeField] private PlayerClass[] playerClasses;
+
+    //
     public override void OnSceneReady()
     {
         Debug.Log("Scene Ready");
+        PlayerController.Instance.SetPlayerClass(playerClasses[(int)GameData.Instance.GetPlayerData().charType]);
         PlayerController.Instance.EnableCharacter();
     }
 

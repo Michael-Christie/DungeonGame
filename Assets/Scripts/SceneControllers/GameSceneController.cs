@@ -16,6 +16,7 @@ public class GameSceneController : BaseSceneLoader
     public override void OnSceneReady()
     {
         MenuManager.Instance.ShowMenu((int)GameConstants.Menus.GameHud);
+        PlayerController.Instance.EnableCharacter();
     }
 
     public override void OnSceneStart()

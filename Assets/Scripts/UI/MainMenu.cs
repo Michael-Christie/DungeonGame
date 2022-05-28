@@ -23,7 +23,6 @@ public class MainMenu : MenuBase
         public Button btnCardPress;
 
         public TextMeshProUGUI txtPlayerName;
-        public TextMeshProUGUI txtPlayerClassType;
         public TextMeshProUGUI txtPlayerCoin;
     }
 
@@ -42,6 +41,9 @@ public class MainMenu : MenuBase
     [Header("Save Data Screen")]
     [SerializeField] private GameObject userSelectBackground;
 
+    [SerializeField] private GameObject saveTitle;
+    [SerializeField] private GameObject saveBack;
+
     [SerializeField] private SaveFileStruct[] saveSlots;
 
     [SerializeField] private Button btnBackToMenu;
@@ -50,7 +52,25 @@ public class MainMenu : MenuBase
 
     [SerializeField] private CanvasGroup newSaveCanvasFade;
 
-    [SerializeField] private TMP_InputField userName;
+    [SerializeField] private Toggle togNormal;
+    [SerializeField] private Toggle togScout;
+    [SerializeField] private Toggle togMage;
+    [SerializeField] private Toggle togHeavy;
+    [SerializeField] private Toggle togOther;
+
+    [SerializeField] private TextMeshProUGUI txtClassTitle;
+    [SerializeField] private TextMeshProUGUI txtClassDescription;
+
+    private string[] classDescriptions =
+    {
+        /*Hunter*/"A Hunter is a balanced class, where everything is even across the board.",
+        /*Scout*/"Scout has increased movement speed but deals less damage.",
+        /*Heavy*/"Heavy has increased strength and health, but moves at a slower pace than most.",
+        /*Mage*/"Mage moves swiftly across the world, but can only use magic based weapons,",
+        /*Class4*/"Who knows what this class will be?"
+    };
+
+    private GameConstants.CharacterTypes selectedType;
 
     private int saveSlotSelected = -1;
 
@@ -115,6 +135,51 @@ public class MainMenu : MenuBase
                 });
         }
 
+        togNormal.onValueChanged.AddListener(
+            delegate (bool _value)
+            {
+                if (_value)
+                {
+                    SelectedClass(GameConstants.CharacterTypes.Normal);
+                }
+            });
+
+        togScout.onValueChanged.AddListener(
+            delegate (bool _value)
+            {
+                if (_value)
+                {
+                    SelectedClass(GameConstants.CharacterTypes.Scout);
+                }
+            });
+
+        togHeavy.onValueChanged.AddListener(
+            delegate (bool _value)
+            {
+                if (_value)
+                {
+                    SelectedClass(GameConstants.CharacterTypes.Heavy);
+                }
+            });
+
+        togMage.onValueChanged.AddListener(
+            delegate (bool _value)
+            {
+                if (_value)
+                {
+                    SelectedClass(GameConstants.CharacterTypes.Mage);
+                }
+            });
+
+        togOther.onValueChanged.AddListener(
+            delegate (bool _value)
+            {
+                if (_value)
+                {
+                    SelectedClass(GameConstants.CharacterTypes.Class4);
+                }
+            });
+
         canvasGroupFade.DOFade(1, GameConstants.Animations.fadeTime);
 
         StartCoroutine(LoadPlayersData());
@@ -175,7 +240,7 @@ public class MainMenu : MenuBase
 
     private void GameStart()
     {
-        enterDungeonText.SetActive(false); //could have the text fade maybe?
+        enterDungeonText.SetActive(false);
         btnStartGame.enabled = false;
 
         AudioManager.Instance.PlaySoundEffect(GameConstants.SoundClip.ButtonPress);
@@ -254,7 +319,7 @@ public class MainMenu : MenuBase
 
     private void ConfigurePlayerSaveCards(int _cardIndex, PlayerData _data)
     {
-        if (_data == null) //There is no save file
+        if (_data.Equals(default(PlayerData))) //There is no save file
         {
             saveSlots[_cardIndex].emptyObject.SetActive(true);
             saveSlots[_cardIndex].filledSaveObject.SetActive(false);
@@ -264,8 +329,7 @@ public class MainMenu : MenuBase
             saveSlots[_cardIndex].emptyObject.SetActive(false);
             saveSlots[_cardIndex].filledSaveObject.SetActive(true);
 
-            saveSlots[_cardIndex].txtPlayerName.text = _data.name;
-            saveSlots[_cardIndex].txtPlayerClassType.text = _data.charType;
+            saveSlots[_cardIndex].txtPlayerName.text = _data.charType.ToString();
             saveSlots[_cardIndex].txtPlayerCoin.text = _data.coin.ToString("N000");
         }
     }
@@ -276,10 +340,27 @@ public class MainMenu : MenuBase
 
         saveSlotSelected = _saveSlot;
 
-        userName.text = "";
+        togNormal.isOn = true;
+        SelectedClass(GameConstants.CharacterTypes.Normal);
 
         newSaveCanvasFade.gameObject.SetActive(true);
-        newSaveCanvasFade.DOFade(1, GameConstants.Animations.fadeTimeShort);
+        newSaveCanvasFade.DOFade(1, GameConstants.Animations.fadeTimeShort)
+            .OnComplete(
+                delegate
+                {
+                    ToggleCardContent(false);
+                });
+    }
+
+    private void ToggleCardContent(bool _isActive)
+    {
+        for (int i = 0; i < saveSlots.Length; i++)
+        {
+            saveSlots[i].parentObject.SetActive(_isActive);
+        }
+
+        saveTitle.SetActive(_isActive);
+        saveBack.SetActive(_isActive);
     }
 
     private void CreateSave()
@@ -289,11 +370,10 @@ public class MainMenu : MenuBase
 
         PlayerData _temp = new PlayerData();
 
-        _temp.name = userName.text;
-        _temp.charType = "Wizard";
+        _temp.charType = selectedType;
         _temp.coin = 100;
 
-        SaveFileHelper.SaveDataXML(GetSavePathFromInt(saveSlotSelected), _temp);
+        SaveFileHelper.SaveDataXML(GameConstants.GetSavePathFromInt(saveSlotSelected), _temp);
 
         ConfigurePlayerSaveCards(saveSlotSelected, _temp);
 
@@ -305,6 +385,8 @@ public class MainMenu : MenuBase
         AudioManager.Instance.PlaySoundEffect(GameConstants.SoundClip.ButtonPress);
 
         saveSlotSelected = -1;
+
+        ToggleCardContent(true);
 
         newSaveCanvasFade.DOFade(0, GameConstants.Animations.fadeTimeShort)
             .onComplete =
@@ -318,30 +400,17 @@ public class MainMenu : MenuBase
     {
         AudioManager.Instance.PlaySoundEffect(GameConstants.SoundClip.ButtonPress);
 
-        PlayerData _player;
-        SaveFileHelper.LoadDataXML(GetSavePathFromInt(_saveSlot), out _player);
+        SaveFileHelper.LoadDataXML(GameConstants.GetSavePathFromInt(_saveSlot), out PlayerData _player);
 
-        GameData.Instance.SetPlayerData(_player);
+        GameData.Instance.SetPlayerData(_player, _saveSlot);
 
         CoreBootLoader.Instance.ChangeSceneCollection((int)GameConstants.SceneCollections.HubWorld);
     }
 
-    private string GetSavePathFromInt(int _saveSlot)
+    private void SelectedClass(GameConstants.CharacterTypes _type)
     {
-        if (_saveSlot == 0)
-        {
-            return GameConstants.SaveFiles.PlayerOneSave;
-        }
-        else if (_saveSlot == 1)
-        {
-            return GameConstants.SaveFiles.PlayerTwoSave;
-        }
-        else if (_saveSlot == 2)
-        {
-            return GameConstants.SaveFiles.PlayerThreeSave;
-        }
-
-        Debug.LogError($"Load Save System | Save slot {_saveSlot} is not in Range", this);
-        return GameConstants.SaveFiles.ErrorSave;
+        selectedType = _type;
+        txtClassTitle.text = _type.ToString();
+        txtClassDescription.text = classDescriptions[(int)_type];
     }
 }

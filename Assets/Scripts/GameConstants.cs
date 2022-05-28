@@ -118,11 +118,47 @@ public static class GameConstants
 
     public enum CharacterTypes
     {
+        Normal,
         Scout, //Quick movement, Light attack, light defence
         Heavy, //Slow movement, heavy attack, heavy defence
         Mage, //Quick movement, ranged attacks, light defence
         Class4,
-        Class5
+    }
 
+    public enum Stats
+    {
+        PlayTime,
+        DungeonsPlayed,
+        DungeonsComplete,
+        DungeonsLost,
+        EnemiesKilled,
+    }
+
+    public enum StatCategory
+    {
+        General,
+        Dungeons,
+        Enemies,
+        Misc
+    }
+
+    //
+    public static string GetSavePathFromInt(int _saveSlot)
+    {
+        if (_saveSlot == 0)
+        {
+            return SaveFiles.PlayerOneSave;
+        }
+        else if (_saveSlot == 1)
+        {
+            return SaveFiles.PlayerTwoSave;
+        }
+        else if (_saveSlot == 2)
+        {
+            return SaveFiles.PlayerThreeSave;
+        }
+
+        Debug.LogError($"Load Save System | Save slot {_saveSlot} is not in Range");
+        return SaveFiles.ErrorSave;
     }
 }

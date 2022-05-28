@@ -22,6 +22,10 @@ public class PlayerController : MonoBehaviour
 
     [SerializeField] private Transform cameraControl;
 
+    private const float defaultMoveSpeed = 7.0f;
+
+    public PlayerClass playerClass { get; private set; }
+
     public Camera PlayerCamera
     {
         get
@@ -84,5 +88,12 @@ public class PlayerController : MonoBehaviour
     public void SetPosition(Vector3 _pos)
     {
         transform.position = _pos;
+    }
+
+    public void SetPlayerClass(PlayerClass _class)
+    {
+        playerClass = _class;
+
+        advancedWalking.movementSpeed = defaultMoveSpeed * _class.Speed;
     }
 }

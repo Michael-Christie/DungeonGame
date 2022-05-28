@@ -8,15 +8,31 @@ public class GameData : MonoBehaviour
 
     private PlayerData playerData;
 
+    private int saveSlot = -1;
+
     //
     private void Awake()
     {
         Instance = this;
     }
 
-    public void SetPlayerData(PlayerData _data)
+    private void OnApplicationQuit()
+    {
+        //Save data...
+        if(playerData.Equals(default(PlayerData)) || saveSlot == -1)
+        {
+            return;
+        }
+
+        playerData.stats = StatsManager.Instance.Stats;
+
+        SaveFileHelper.SaveDataXML(GameConstants.GetSavePathFromInt(saveSlot), playerData);
+    }
+
+    public void SetPlayerData(PlayerData _data, int _saveSlot)
     {
         playerData = _data;
+        saveSlot = _saveSlot;
     }
 
     public PlayerData GetPlayerData()
