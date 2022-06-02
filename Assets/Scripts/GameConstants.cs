@@ -118,7 +118,7 @@ public static class GameConstants
 
     public enum CharacterTypes
     {
-        Normal,
+        Hunter,
         Scout, //Quick movement, Light attack, light defence
         Heavy, //Slow movement, heavy attack, heavy defence
         Mage, //Quick movement, ranged attacks, light defence

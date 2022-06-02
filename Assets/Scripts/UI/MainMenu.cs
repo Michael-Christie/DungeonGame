@@ -63,7 +63,7 @@ public class MainMenu : MenuBase
 
     private string[] classDescriptions =
     {
-        /*Hunter*/"A Hunter is a balanced class, where everything is even across the board.",
+        /*Hunter*/"Hunter is the default class. It has standard movement speed and attack damange, meaning you can play this class how you like.",
         /*Scout*/"Scout has increased movement speed but deals less damage.",
         /*Heavy*/"Heavy has increased strength and health, but moves at a slower pace than most.",
         /*Mage*/"Mage moves swiftly across the world, but can only use magic based weapons,",
@@ -140,7 +140,7 @@ public class MainMenu : MenuBase
             {
                 if (_value)
                 {
-                    SelectedClass(GameConstants.CharacterTypes.Normal);
+                    SelectedClass(GameConstants.CharacterTypes.Hunter);
                 }
             });
 
@@ -341,7 +341,7 @@ public class MainMenu : MenuBase
         saveSlotSelected = _saveSlot;
 
         togNormal.isOn = true;
-        SelectedClass(GameConstants.CharacterTypes.Normal);
+        SelectedClass(GameConstants.CharacterTypes.Hunter);
 
         newSaveCanvasFade.gameObject.SetActive(true);
         newSaveCanvasFade.DOFade(1, GameConstants.Animations.fadeTimeShort)
