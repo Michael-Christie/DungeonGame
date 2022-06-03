@@ -13,8 +13,15 @@ public class GameSceneController : BaseSceneLoader
     [SerializeField] private GameObject leftDoor;
     [SerializeField] private GameObject rightDoor;
 
+    [SerializeField] private MobSpawner[] mobSpawners;
+
     public override void OnSceneReady()
     {
+        for(int i = 0; i < mobSpawners.Length; i++)
+        {
+            mobSpawners[i].SpawnEnemysInWorld();
+        }
+
         MenuManager.Instance.ShowMenu((int)GameConstants.Menus.GameHud);
         PlayerController.Instance.EnableCharacter();
     }

@@ -56,7 +56,7 @@ public class GameOverMenu : MenuBase
         reasonIcon.sprite = GetReasonIcon();
         reasonMessage.sprite = GetReasonMessage();
 
-        _gameScoreCache = GameManager.Instance.GameScore;
+        _gameScoreCache = GameManager.Instance.Score;
 
         txtScore.text = _gameScoreCache.score.ToString("N000");
         txtBestScore.text = "0101";

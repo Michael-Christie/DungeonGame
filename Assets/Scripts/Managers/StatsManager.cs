@@ -25,35 +25,28 @@ public partial class StatsManager : MonoBehaviour
 
         if (_rawData == null)
         {
-            return;
-        }
-
-        for(int i = 0; i < Stats.Length; i++)
-        {
-            for(int j = 0; j < _rawData.Length; j++)
+            for (int i = 0; i < Stats.Length; i++)
             {
-                if(Stats[i].statID == _rawData[j].statID)
+                for (int j = 0; j < _rawData.Length; j++)
                 {
-                    Stats[i].value = _rawData[j].value;
-                    break;
+                    if (Stats[i].statID == _rawData[j].statID)
+                    {
+                        Stats[i].value = _rawData[j].value;
+                        break;
+                    }
                 }
             }
         }
 
-        //After I've loaded data, maybe I should order it in (int)Stats order?
+        //reorder the array to be ordered by stat ID
         Stats = Stats.OrderBy(x => (int)x.statID).ToArray();
     }
 
     public void AddValueToStat(GameConstants.Stats _stat, float _value)
     {
-        foreach(StatData _data in Stats)
+        if (Stats.Length - 1 > (int)_stat)
         {
-            if(_data.statID != _stat)
-            {
-                continue;
-            }
-
-            _data.value += _value;
+            Stats[(int)_stat].value += _value;
             return;
         }
 
@@ -62,14 +55,9 @@ public partial class StatsManager : MonoBehaviour
 
     public void SetValueToStat(GameConstants.Stats _stat, float _value)
     {
-        foreach (StatData _data in Stats)
+        if (Stats.Length - 1 > (int)_stat)
         {
-            if (_data.statID != _stat)
-            {
-                continue;
-            }
-
-            _data.value = _value;
+            Stats[(int)_stat].value = _value;
             return;
         }
 
@@ -78,14 +66,9 @@ public partial class StatsManager : MonoBehaviour
 
     public void SetMaxValueToStat(GameConstants.Stats _stat, float _value)
     {
-        foreach (StatData _data in Stats)
+        if (Stats.Length - 1 > (int)_stat)
         {
-            if (_data.statID != _stat)
-            {
-                continue;
-            }
-
-            _data.value = Mathf.Max(_value, _data.value);
+            Stats[(int)_stat].value = Mathf.Max(Stats[(int)_stat].value, _value);
             return;
         }
 
@@ -99,15 +82,9 @@ public partial class StatsManager : MonoBehaviour
     /// <returns>Returns stat value or -1 if stat not found.</returns>
     public float GetValue(GameConstants.Stats _stat)
     {
-        foreach (StatData _data in Stats)
+        if (Stats.Length - 1 > (int)_stat)
         {
-            if (_data.statID != _stat)
-            {
-                continue;
-            }
-
-            return _data.value;
-
+            return Stats[(int)_stat].value;
         }
 
         return -1;

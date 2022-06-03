@@ -182,6 +182,10 @@ PrefabInstance:
       propertyPath: jumpSpeed
       value: 6
       objectReference: {fileID: 0}
+    - target: {fileID: 1103143234545168872, guid: 1ea5714554406484c8037e495f767252, type: 3}
+      propertyPath: m_Center.y
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 5500071129964684250, guid: 1ea5714554406484c8037e495f767252, type: 3}
       propertyPath: cameraControl
       value: 

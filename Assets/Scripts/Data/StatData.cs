@@ -32,6 +32,12 @@ public partial class StatsManager : MonoBehaviour
         },
         new StatData()
         {
+            statID = GameConstants.Stats.DungeonsAbandoned,
+            category = GameConstants.StatCategory.Dungeons,
+            displayName = "Dungeons Abandoned"
+        },
+        new StatData()
+        {
             statID = GameConstants.Stats.EnemiesKilled,
             category = GameConstants.StatCategory.Enemies,
             displayName = "Enemies Killed"

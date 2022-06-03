@@ -155,6 +155,8 @@ MonoBehaviour:
   pooledObjects:
   - prefab: {fileID: 5628922533373741217, guid: 9b801f717381a8d4cadee23910b7b423, type: 3}
     amountToCreate: 1
+  - prefab: {fileID: 5703747909256114279, guid: 162bfabb9c12b3a4580e2647c2ac03c0, type: 3}
+    amountToCreate: 10
 --- !u!4 &1128052858
 Transform:
   m_ObjectHideFlags: 0

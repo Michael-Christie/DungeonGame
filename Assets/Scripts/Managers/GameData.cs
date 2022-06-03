@@ -33,10 +33,22 @@ public class GameData : MonoBehaviour
     {
         playerData = _data;
         saveSlot = _saveSlot;
+
+        StartCoroutine(SlowUpdate());
     }
 
     public PlayerData GetPlayerData()
     {
         return playerData;
+    }
+
+    private IEnumerator SlowUpdate()
+    {
+        while (true)
+        {
+            yield return GameConstants.WaitTimers.waitForOneRealSecond;
+
+            StatsManager.Instance?.AddValueToStat(GameConstants.Stats.PlayTime, 1);
+        }
     }
 }

@@ -10,7 +10,8 @@ public enum EndGameReason
 {
     Completed,
     OutOfTime,
-    Died
+    Died,
+    Abandoned
 }
 
 public class GameManager : MonoBehaviour
@@ -58,7 +59,7 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    public GameScore GameScore
+    public GameScore Score
     {
         get
         {
@@ -94,6 +95,7 @@ public class GameManager : MonoBehaviour
         }
 
         collectedGoal = false;
+        GameOverMenu.endGameReason = null;
 
         //Spawn the artefact somewhere...
         IPoolable _pooledObject = ObjectPooler.Instance.GetObject((int)GameConstants.EntityID.Artefact);
@@ -118,6 +120,20 @@ public class GameManager : MonoBehaviour
 
         GameOverMenu.endGameReason = _reason;
         MenuManager.Instance.ShowMenu((int)GameConstants.Menus.GameOver);
+
+        //Update the stats manager
+        if(_reason == EndGameReason.Completed)
+        {
+            StatsManager.Instance.AddValueToStat(GameConstants.Stats.DungeonsComplete, 1);
+        }
+        else if(_reason == EndGameReason.Abandoned)
+        {
+            StatsManager.Instance.AddValueToStat(GameConstants.Stats.DungeonsAbandoned, 1);
+        }
+        else
+        {
+            StatsManager.Instance.AddValueToStat(GameConstants.Stats.DungeonsLost, 1);
+        }
     }
 
     public void StartEndGame()
@@ -154,6 +170,23 @@ public class GameManager : MonoBehaviour
 
         yield return GameConstants.WaitTimers.waitForOneSecond;
 
-        EndGame(EndGameReason.Completed);
+        if (collectedGoal)
+        {
+            EndGame(EndGameReason.Completed);
+        }
+        else
+        {
+            EndGame(EndGameReason.Abandoned);
+        }
+    }
+
+    public void AddKillToScore(int _kill = 1)
+    {
+        gameScore.kills += _kill;
+    }
+
+    public void AddXPToScore(int _xp)
+    {
+        gameScore.xp += _xp;
     }
 }

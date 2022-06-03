@@ -29,6 +29,8 @@ public static class GameConstants
         public static WaitForSeconds waitForScaleShort = new WaitForSeconds(Animations.scaleTimeShort);
         public static WaitForSeconds waitForMoveShort = new WaitForSeconds(Animations.moveTimeShort);
         public static WaitForSeconds waitForFlipShort = new WaitForSeconds(Animations.flipTimeShort);
+
+        public static WaitForSecondsRealtime waitForOneRealSecond = new WaitForSecondsRealtime(1.0F);
     }
 
     public static class Animations
@@ -100,13 +102,19 @@ public static class GameConstants
     {
         None = -1,
         Artefact = 1,
-        Coins = 2
+        Coins = 2,
+        BaseAI = 3,
     }
 
     public enum ItemID
     {
         Artefact = 1,
         Coins = 2,
+    }
+
+    public enum EnemyID
+    {
+        BaseAI = 3
     }
 
     public enum Menus
@@ -131,6 +139,7 @@ public static class GameConstants
         DungeonsPlayed,
         DungeonsComplete,
         DungeonsLost,
+        DungeonsAbandoned,
         EnemiesKilled,
     }
 
