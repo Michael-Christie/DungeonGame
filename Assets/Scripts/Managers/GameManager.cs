@@ -33,6 +33,8 @@ public class GameManager : MonoBehaviour
     private bool collectedGoal;
     private bool endGameCountdown;
 
+    public Action<GameTime> onTimerUpdate;
+
     public GameTime CurrentTime
     {
         get
@@ -79,6 +81,7 @@ public class GameManager : MonoBehaviour
         {
             yield return GameConstants.WaitTimers.waitForOneSecond;
 
+            onTimerUpdate?.Invoke(TimeRemaining);
         }
 
         EndGame(EndGameReason.OutOfTime);
@@ -88,6 +91,8 @@ public class GameManager : MonoBehaviour
     {
         startTime = DateTime.UtcNow;
         endTime = startTime + TimeSpan.FromMinutes(5);
+
+        onTimerUpdate?.Invoke(TimeRemaining);
 
         if (MCDiscordManager.Instance.IsInitialized)
         {

@@ -6,7 +6,7 @@ public struct GameTime
     //
     public override string ToString()
     {
-        return $"{minuets}:{seconds}";
+        return $"{minuets:D2}:{seconds:D2}";
     }
 }
 

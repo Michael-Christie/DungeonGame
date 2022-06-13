@@ -15,6 +15,11 @@ public class MobSpawner : MonoBehaviour
     [SerializeField] private GameConstants.EnemyID spawnType;
 
     //
+    private void OnDrawGizmosSelected()
+    {
+        Gizmos.DrawWireSphere(transform.position, spawnRadius);
+    }
+
     public void SpawnEnemysInWorld()
     {
         int _amountToSpawn = Random.Range(spawnAmount.x, spawnAmount.y);

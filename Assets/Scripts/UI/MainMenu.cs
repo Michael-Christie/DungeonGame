@@ -36,6 +36,8 @@ public class MainMenu : MenuBase
 
     [SerializeField] private Button btnSettings;
     [SerializeField] private Button btnStartGame;
+    [SerializeField] private Button btnDiscord;
+    [SerializeField] private Button btnTwitter;
 
     [Space]
     [Header("Save Data Screen")]
@@ -104,6 +106,9 @@ public class MainMenu : MenuBase
         btnBackToMenu.onClick.AddListener(BackToMenu);
         btnCancelNew.onClick.AddListener(CancelNewSave);
         btnCreateNew.onClick.AddListener(CreateSave);
+
+        btnDiscord.onClick.AddListener(OpenDiscord);
+        btnTwitter.onClick.AddListener(OpenTwitter);
 
         for (int i = 0; i < saveSlots.Length; i++)
         {
@@ -413,4 +418,16 @@ public class MainMenu : MenuBase
         txtClassTitle.text = _type.ToString();
         txtClassDescription.text = classDescriptions[(int)_type];
     }
+
+    #region Social Media Links
+    private void OpenDiscord()
+    {
+        MCDiscordManager.Instance.RequestInviteToDiscordServer();
+    }
+
+    private void OpenTwitter()
+    {
+        Application.OpenURL("https://twitter.com/MichaelChriste");
+    }
+    #endregion
 }

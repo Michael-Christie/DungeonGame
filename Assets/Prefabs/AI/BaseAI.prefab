@@ -136,3 +136,6 @@ MonoBehaviour:
   hitMask:
     serializedVersion: 2
     m_Bits: 4294967295
+  redFlash: {fileID: 2100000, guid: a3bb84bdc0e006f4dab6b76ea8658ea5, type: 2}
+  whiteDefault: {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
+  meshRenderer: {fileID: 5703747909256114275}

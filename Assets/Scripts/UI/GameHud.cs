@@ -4,9 +4,12 @@ using UnityEngine;
 using UnityEngine.UI;
 using DG.Tweening;
 using System;
+using TMPro;
 
 public class GameHud : MenuBase
 {
+    [SerializeField] private TextMeshProUGUI txtTimer;
+
     [SerializeField] private Image[] hearts;
 
     private int lastHealth = 12;
@@ -25,6 +28,8 @@ public class GameHud : MenuBase
 
         menuPanel.SetActive(true);
 
+        GameManager.Instance.onTimerUpdate += UpdateTimer;
+
         OnShowComplete();
     }
 
@@ -33,6 +38,8 @@ public class GameHud : MenuBase
         base.Hide(_onHideComplete);
 
         menuPanel.SetActive(false);
+
+        GameManager.Instance.onTimerUpdate -= UpdateTimer;
 
         OnHideComplete();
     }
@@ -67,5 +74,10 @@ public class GameHud : MenuBase
 
         lastHealth = _currentHealth;
         return true;
+    }
+
+    public void UpdateTimer(GameTime _time)
+    {
+        txtTimer.text = _time.ToString();
     }
 }

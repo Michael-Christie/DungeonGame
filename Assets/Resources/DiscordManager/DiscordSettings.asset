@@ -18,5 +18,11 @@ MonoBehaviour:
   largeImageText: 
   smallImageKey: 
   smallImageText: 
-  serverInviteCode: 
+  serverInviteCode: EWVGHGTE97
+  defaultWebhookURL: 
   hasSteamID: 0
+  useDebugLogging: 0
+  useWebhooks: 0
+  initializeOnStart: 0
+  minLoggingLevel: 4
+  discordLoadFlag: 1

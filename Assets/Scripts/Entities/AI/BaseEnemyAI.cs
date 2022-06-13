@@ -16,7 +16,7 @@ public class BaseEnemyAI : BaseEntity, IPoolable, IDamageable
 
     public bool IsInScene { get; set; }
 
-    public int Health { get; set; }
+    public int Health { get; set; } = 100;
 
     [SerializeField] private NavMeshAgent navMeshAgent;
 
@@ -27,6 +27,11 @@ public class BaseEnemyAI : BaseEntity, IPoolable, IDamageable
     [SerializeField] private LayerMask hitMask;
 
     private Vector3? lastSeenPosition;
+
+    [SerializeField] private Material redFlash;
+    [SerializeField] private Material whiteDefault;
+
+    [SerializeField] private MeshRenderer meshRenderer;
 
     //
     #region Interfaces
@@ -65,6 +70,8 @@ public class BaseEnemyAI : BaseEntity, IPoolable, IDamageable
 
         if(Health > 0)
         {
+            StartCoroutine(IChangeColor());
+
             return;
         }
 
@@ -85,6 +92,7 @@ public class BaseEnemyAI : BaseEntity, IPoolable, IDamageable
         if (CanSeePlayer())
         {
             currentState = EnemyState.Chasing;
+            navMeshAgent.isStopped = false;
         }
         else
         {
@@ -96,8 +104,10 @@ public class BaseEnemyAI : BaseEntity, IPoolable, IDamageable
         {
             navMeshAgent.SetDestination(lastSeenPosition.Value);
 
-            if (Vector3.Distance(transform.position, lastSeenPosition.Value) < 0.5f)
+            if (Vector3.Distance(transform.position, lastSeenPosition.Value) < 2.5f)
             {
+                navMeshAgent.isStopped = true;
+
                 lastSeenPosition = null;
 
                 currentState = EnemyState.Idle;
@@ -110,7 +120,6 @@ public class BaseEnemyAI : BaseEntity, IPoolable, IDamageable
         Ray _ray = new Ray(transform.position, (PlayerController.Instance.PlayerCamera.transform.position - transform.position).normalized);
         if(Physics.Raycast(_ray, out RaycastHit _hit, sightDistance, hitMask))
         {
-            Debug.Log(_hit.collider.name, _hit.collider.gameObject);
             if (_hit.collider.CompareTag(GameConstants.Tags.player))
             {
                 //hit the player...
@@ -126,5 +135,12 @@ public class BaseEnemyAI : BaseEntity, IPoolable, IDamageable
     private void IdleUpdate()
     {
         //Do small movements basically
+    }
+
+    private IEnumerator IChangeColor()
+    {
+        meshRenderer.material = redFlash;
+        yield return GameConstants.WaitTimers.waitForPointFive;
+        meshRenderer.material = whiteDefault;
     }
 }

@@ -49,4 +49,14 @@ public class BaseItem : BaseEntity, IPoolable, IInteractable
             Debug.Log("Inv is full");
         }
     }
+
+    public virtual void OnLeftClick()
+    {
+
+    }
+
+    public virtual void OnRightClick()
+    {
+
+    }
 }

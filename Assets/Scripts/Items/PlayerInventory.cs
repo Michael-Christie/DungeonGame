@@ -36,6 +36,8 @@ public class PlayerInventory : MonoBehaviour
     public Action onInventoryUpdate;
     public Action onHotbarUpdate;
 
+    [SerializeField] private ItemData hotbarItem;
+
     //
     private void Awake()
     {
@@ -64,6 +66,14 @@ public class PlayerInventory : MonoBehaviour
                 MenuManager.Instance.HideMenu();
             }
             tempBool = !tempBool;
+        }
+        else if (Input.GetMouseButtonDown(0))
+        {
+            hotbarItem?.OnLeftClick();
+        }
+        else if (Input.GetMouseButtonDown(1))
+        {
+            hotbarItem?.OnRightClick();
         }
     }
 
