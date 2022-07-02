@@ -12,12 +12,4 @@ public class GameStartCollider : MonoBehaviour
             HubManager.Instance.StartGameCountDown();
         }
     }
-
-    private void OnTriggerExit(Collider _other)
-    {
-        if (_other.CompareTag(GameConstants.Tags.player))
-        {
-            HubManager.Instance.StopGameCountDown();
-        }
-    }
 }

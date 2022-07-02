@@ -11,10 +11,7 @@ public class HubManager : MonoBehaviour
 {
     public static HubManager Instance { get; private set; }
 
-    private bool isStartingGame;
-
-    [SerializeField] private GameObject leftDoor; 
-    [SerializeField] private GameObject rightDoor;
+    private bool isPortalAlive;
 
     [SerializeField] private Material matPortal;
 
@@ -24,66 +21,31 @@ public class HubManager : MonoBehaviour
     private void Awake()
     {
         Instance = this;
-        //portalAlphaFade = Shader.PropertyToID("AlphaFade");
 
         TurnOffPortal();
     }
 
     public void StartGameCountDown()
     {
-        Debug.Log("Starting Countdown");
-        isStartingGame = true;
+        if (!isPortalAlive)
+            return;
 
-        StartCoroutine(GameStartCoutdown());
-    }
-
-    public void StopGameCountDown()
-    {
-        Debug.Log("Stopping Countdown");
-        isStartingGame = false;
-    }
-
-    private IEnumerator GameStartCoutdown()
-    {
-        for (int i = 0; i < 3; i++)
-        {
-            HubHud.ShowCountdownDigit?.Invoke(3 - i);
-
-            yield return GameConstants.WaitTimers.waitForOneSecond;
-            yield return GameConstants.WaitTimers.waitForPointFive;
-
-            if(!isStartingGame)
-            {
-                yield break;
-            }
-        }
-
-        leftDoor.transform.DOLocalRotate(Vector3.zero, GameConstants.Animations.rotateTime);
-        rightDoor.transform.DOLocalRotate(Vector3.zero, GameConstants.Animations.rotateTime);
-
-        TurnOnPortal();
-
-        yield return GameConstants.WaitTimers.waitForRotate;
-
-        yield return GameConstants.WaitTimers.waitForOneSecond;
-
-        StartGame();
-    }
-
-    private void StartGame()
-    {
         Debug.Log("Starting Game");
         //Do some animation and then start the game.
         CoreBootLoader.Instance.ChangeSceneCollection((int)GameConstants.SceneCollections.Game);
     }
 
-    private void TurnOffPortal()
+    public void TurnOffPortal()
     {
         matPortal.DOFloat(1, portalAlphaFade, 1);
+
+        isPortalAlive = false;
     }
 
-    private void TurnOnPortal()
+    public void TurnOnPortal()
     {
         matPortal.DOFloat(0, portalAlphaFade, 2.5f);
+
+        isPortalAlive = true;
     }
 }

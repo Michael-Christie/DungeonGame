@@ -25,8 +25,6 @@ public class HubSceneController : BaseSceneLoader
         {
             MCDiscordManager.Instance.SetActivity("In Hub", "");
         }
-
-        HubManager.Instance.StopGameCountDown();
     }
 
     public override void OnSceneChange()

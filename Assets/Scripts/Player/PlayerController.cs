@@ -44,7 +44,7 @@ public class PlayerController : MonoBehaviour
     public void Update()
     {
         //This maybe need to move over to a new input system way to get this more flexible with input
-        if (Input.GetMouseButtonDown(0))
+        if (Input.GetKeyDown(KeyCode.F))
         {
             lastHitInteractable?.OnInteract();
         }

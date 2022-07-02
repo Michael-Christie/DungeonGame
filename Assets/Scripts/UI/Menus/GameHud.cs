@@ -44,6 +44,11 @@ public class GameHud : MenuBase
         OnHideComplete();
     }
 
+    public override void OnEscHit()
+    {
+        MenuManager.Instance.ShowMenu((int)GameConstants.Menus.Pause);
+    }
+
     /// <summary>
     /// Updates the hearts on the Hud
     /// </summary>
