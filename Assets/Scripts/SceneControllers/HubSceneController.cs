@@ -14,6 +14,8 @@ public class HubSceneController : BaseSceneLoader
         Debug.Log("Scene Ready");
         PlayerController.Instance.SetPlayerClass(playerClasses[(int)GameData.Instance.GetPlayerData().charType]);
         PlayerController.Instance.EnableCharacter();
+
+        MenuManager.Instance.ShowMenu((int)GameConstants.Menus.HubHud);
     }
 
     public override void OnSceneStart()

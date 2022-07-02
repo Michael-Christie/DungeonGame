@@ -13,15 +13,20 @@ public class HubManager : MonoBehaviour
 
     private bool isStartingGame;
 
-    [SerializeField] private HubUI hubUI;
-
     [SerializeField] private GameObject leftDoor; 
-    [SerializeField] private GameObject rightDoor; 
+    [SerializeField] private GameObject rightDoor;
+
+    [SerializeField] private Material matPortal;
+
+    private int portalAlphaFade = Shader.PropertyToID("AlphaFade");
 
     //
     private void Awake()
     {
         Instance = this;
+        //portalAlphaFade = Shader.PropertyToID("AlphaFade");
+
+        TurnOffPortal();
     }
 
     public void StartGameCountDown()
@@ -42,7 +47,7 @@ public class HubManager : MonoBehaviour
     {
         for (int i = 0; i < 3; i++)
         {
-            hubUI.ShowCoutdown((3 - i).ToString());
+            HubHud.ShowCountdownDigit?.Invoke(3 - i);
 
             yield return GameConstants.WaitTimers.waitForOneSecond;
             yield return GameConstants.WaitTimers.waitForPointFive;
@@ -56,6 +61,8 @@ public class HubManager : MonoBehaviour
         leftDoor.transform.DOLocalRotate(Vector3.zero, GameConstants.Animations.rotateTime);
         rightDoor.transform.DOLocalRotate(Vector3.zero, GameConstants.Animations.rotateTime);
 
+        TurnOnPortal();
+
         yield return GameConstants.WaitTimers.waitForRotate;
 
         yield return GameConstants.WaitTimers.waitForOneSecond;
@@ -68,5 +75,15 @@ public class HubManager : MonoBehaviour
         Debug.Log("Starting Game");
         //Do some animation and then start the game.
         CoreBootLoader.Instance.ChangeSceneCollection((int)GameConstants.SceneCollections.Game);
+    }
+
+    private void TurnOffPortal()
+    {
+        matPortal.DOFloat(1, portalAlphaFade, 1);
+    }
+
+    private void TurnOnPortal()
+    {
+        matPortal.DOFloat(0, portalAlphaFade, 2.5f);
     }
 }

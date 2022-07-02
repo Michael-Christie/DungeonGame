@@ -121,7 +121,10 @@ public static class GameConstants
     {
         GameHud = 0,
         GameOver = 1,
-        Inventory = 2
+        Inventory = 2,
+        HubHud = 3,
+        Pause = 4,
+        Settings = 5,
     }
 
     public enum CharacterTypes
