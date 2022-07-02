@@ -24,9 +24,7 @@ public class GameData : MonoBehaviour
             return;
         }
 
-        playerData.stats = StatsManager.Instance.Stats;
-
-        SaveFileHelper.SaveDataXML(GameConstants.GetSavePathFromInt(saveSlot), playerData);
+        SaveData();
     }
 
     public void SetPlayerData(PlayerData _data, int _saveSlot)
@@ -50,5 +48,12 @@ public class GameData : MonoBehaviour
 
             StatsManager.Instance?.AddValueToStat(GameConstants.Stats.PlayTime, 1);
         }
+    }
+
+    public void SaveData()
+    {
+        playerData.stats = StatsManager.Instance.Stats;
+
+        SaveFileHelper.SaveDataXML(GameConstants.GetSavePathFromInt(saveSlot), playerData);
     }
 }

@@ -14,11 +14,6 @@ public class SettingsMenu : MenuBase
     [SerializeField] private CanvasGroup fadeGroup;
 
     //
-    private void Start()
-    {
-        Show();
-    }
-
     protected override void Initalize()
     {
         btnClose.onClick.AddListener(CloseMenu);
@@ -37,8 +32,8 @@ public class SettingsMenu : MenuBase
 
     protected override IEnumerator PlayShowAnimation()
     {
-        fadeGroup.DOFade(1, GameConstants.Animations.fadeTimeShort);
-        yield return GameConstants.WaitTimers.waitForFadeShort;
+        //fadeGroup.DOFade(1, GameConstants.Animations.fadeTimeShort);
+        //yield return GameConstants.WaitTimers.waitForFadeShort;
 
         contentPanel.transform.DOScale(Vector3.one, GameConstants.Animations.scaleTimeShort);
         yield return GameConstants.WaitTimers.waitForScale;
@@ -58,19 +53,20 @@ public class SettingsMenu : MenuBase
         contentPanel.transform.DOScale(Vector3.zero, GameConstants.Animations.scaleTimeShort);
         yield return GameConstants.WaitTimers.waitForScaleShort;
 
-        fadeGroup.DOFade(0, GameConstants.Animations.fadeTimeShort);
-        yield return GameConstants.WaitTimers.waitForFadeShort;
+        //fadeGroup.DOFade(0, GameConstants.Animations.fadeTimeShort);
+        //yield return GameConstants.WaitTimers.waitForFadeShort;
 
         menuPanel.SetActive(false);
 
         OnHideComplete();
 
-        MC.Core.CoreBootLoader.Instance.RemoveScene((int)GameConstants.Scenes.Settings);
+        //MC.Core.CoreBootLoader.Instance.RemoveScene((int)GameConstants.Scenes.Settings);
     }
 
     private void CloseMenu()
     {
         AudioManager.Instance.PlaySoundEffect(GameConstants.SoundClip.ButtonPress);
-        Hide();
+        //Hide();
+        MenuManager.Instance.HideMenu();
     }
 }

@@ -4,6 +4,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
+using MC.Core;
+
 public class PauseMenu : MenuBase
 {
     [SerializeField] private Button btnResume; 
@@ -27,6 +29,8 @@ public class PauseMenu : MenuBase
         menuPanel.SetActive(true);
 
         OnShowComplete();
+
+        GameData.Instance.SaveData();
     }
 
     public override void Hide(Action _onHideComplete)
@@ -55,7 +59,7 @@ public class PauseMenu : MenuBase
 
     private void OnQuiteMenu()
     {
-
+        CoreBootLoader.Instance.ChangeSceneCollection((int)GameConstants.SceneCollections.MainMenu);
     }
 
     private void OnQuitDesktop()
