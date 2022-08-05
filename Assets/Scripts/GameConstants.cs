@@ -75,7 +75,6 @@ public static class GameConstants
         PlayerController,
         GameHub,
         UI,
-        Settings,
         GameWorld,
         ObjectPooler
     }
@@ -125,6 +124,8 @@ public static class GameConstants
         HubHud = 3,
         Pause = 4,
         Settings = 5,
+        Statistics = 6,
+        Advancements = 7
     }
 
     public enum CharacterTypes
@@ -144,6 +145,17 @@ public static class GameConstants
         DungeonsLost,
         DungeonsAbandoned,
         EnemiesKilled,
+    }
+
+    public enum Advancement
+    {
+        Killer
+    }
+
+    public enum RewardType
+    {
+        XP,
+        Coin,
     }
 
     public enum StatCategory

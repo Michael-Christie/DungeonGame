@@ -10,7 +10,7 @@ public class GameHud : MenuBase
 {
     [SerializeField] private TextMeshProUGUI txtTimer;
 
-    [SerializeField] private Image[] hearts;
+    [SerializeField] private Slider healthBar;
 
     private int lastHealth = 12;
 
@@ -27,6 +27,10 @@ public class GameHud : MenuBase
         base.Show(_onShowComplete);
 
         menuPanel.SetActive(true);
+
+        healthBar.maxValue = PlayerController.Instance.playerClass.MaxHealth;
+        //This is tempoary and needs to be moved to something else but health isn't important rn
+        healthBar.value = PlayerController.Instance.playerClass.MaxHealth;
 
         GameManager.Instance.onTimerUpdate += UpdateTimer;
 
@@ -58,24 +62,26 @@ public class GameHud : MenuBase
         if (!canUpdateHealth) //This check is to ensure the hearts don't rotate too much
             return false;
 
-        for (int i = 0; i < hearts.Length; i++)
-        {
-            hearts[i].fillAmount = Mathf.Clamp01(_currentHealth * 0.5f - i);
+        healthBar.DOValue(_currentHealth, GameConstants.Animations.shakeTimeShort);
 
-            //Rotate hearts if they have updated (decreased || increased)
-            if ((i >= Mathf.FloorToInt(_currentHealth * 0.5f)
-                    && i < Mathf.CeilToInt(lastHealth * 0.5f))
-                || (i >= Mathf.FloorToInt(lastHealth * 0.5f)
-                    && i < Mathf.CeilToInt(_currentHealth * 0.5f)))
-            {
-                canUpdateHealth = false;
-                hearts[i].transform.parent.DOShakeRotation(GameConstants.Animations.shakeTimeShort, Vector3.forward * 90)
-                    .OnComplete(delegate
-                    {
-                        canUpdateHealth = true;
-                    });
-            }
-        }
+        //for (int i = 0; i < hearts.Length; i++)
+        //{
+        //    hearts[i].fillAmount = Mathf.Clamp01(_currentHealth * 0.5f - i);
+
+        //    //Rotate hearts if they have updated (decreased || increased)
+        //    if ((i >= Mathf.FloorToInt(_currentHealth * 0.5f)
+        //            && i < Mathf.CeilToInt(lastHealth * 0.5f))
+        //        || (i >= Mathf.FloorToInt(lastHealth * 0.5f)
+        //            && i < Mathf.CeilToInt(_currentHealth * 0.5f)))
+        //    {
+        //        canUpdateHealth = false;
+        //        hearts[i].transform.parent.DOShakeRotation(GameConstants.Animations.shakeTimeShort, Vector3.forward * 90)
+        //            .OnComplete(delegate
+        //            {
+        //                canUpdateHealth = true;
+        //            });
+        //    }
+        //}
 
         lastHealth = _currentHealth;
         return true;

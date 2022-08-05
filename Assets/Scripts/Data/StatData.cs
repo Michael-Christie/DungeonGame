@@ -2,8 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public partial class StatsManager : MonoBehaviour
+public partial class StatsManager : BaseValueTracker
 {
+    protected override BaseValueData[] data { get { return Stats; } }
+
     public StatData[] Stats { get; private set; } = new StatData[]
     {
         new StatData()

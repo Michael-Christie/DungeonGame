@@ -30,6 +30,8 @@ public class PauseMenu : MenuBase
 
         OnShowComplete();
 
+        PlayerController.Instance?.DisableMovement();
+
         GameData.Instance.SaveData();
     }
 
@@ -38,6 +40,8 @@ public class PauseMenu : MenuBase
         base.Hide(_onHideComplete);
 
         menuPanel.SetActive(false);
+
+        PlayerController.Instance?.EnableMovement();
 
         OnHideComplete();
     }

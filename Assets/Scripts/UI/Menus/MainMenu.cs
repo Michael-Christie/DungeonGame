@@ -240,7 +240,7 @@ public class MainMenu : MenuBase
     private void OnSettingsClicked()
     {
         AudioManager.Instance.PlaySoundEffect(GameConstants.SoundClip.ButtonPress);
-        CoreBootLoader.Instance.AddScene((int)GameConstants.Scenes.Settings);
+        
     }
 
     private void GameStart()

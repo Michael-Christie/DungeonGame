@@ -14,6 +14,8 @@ public class PlayerController : MonoBehaviour
 
     [SerializeField] private CMF.CharacterKeyboardInput input;
 
+    [SerializeField] private CMF.CameraController cameraController;
+
     [SerializeField] private Rigidbody rigidBody;
 
     [SerializeField] private LayerMask interactHitLayer;
@@ -38,6 +40,7 @@ public class PlayerController : MonoBehaviour
     private void Awake()
     {
         Instance = this;
+        //DisableCharacter();
         EnableCharacter();
     }
 
@@ -63,12 +66,14 @@ public class PlayerController : MonoBehaviour
 
     public void EnableCharacter()
     {
+        Debug.Log("Player Enabled");
         playerCamera.gameObject.SetActive(true);
         EnableMovement();
     }
 
     public void DisableCharacter()
     {
+        Debug.Log("Player Disabled");
         playerCamera.gameObject.SetActive(false);
         DisableMovement();
     }
@@ -77,12 +82,21 @@ public class PlayerController : MonoBehaviour
     {
         moveComponent.enabled = false;
         rigidBody.isKinematic = true;
+        cameraController.isEnabled = false;
+
+        Cursor.lockState = CursorLockMode.None;
+        Cursor.visible = true;
+
     }
 
     public void EnableMovement()
     {
-        moveComponent.enabled = false;
+        moveComponent.enabled = true;
         rigidBody.isKinematic = false;
+        cameraController.isEnabled = true;
+
+        Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false;
     }
 
     public void SetPosition(Vector3 _pos)

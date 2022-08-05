@@ -2,8 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
+using MC.Core;
 
-public partial class StatsManager : MonoBehaviour
+public partial class StatsManager : BaseValueTracker
 {
     public static StatsManager Instance { get; private set; }
 
@@ -31,7 +32,7 @@ public partial class StatsManager : MonoBehaviour
                 {
                     if (Stats[i].statID == _rawData[j].statID)
                     {
-                        Stats[i].value = _rawData[j].value;
+                        Stats[i].Value = _rawData[j].Value;
                         break;
                     }
                 }
@@ -44,35 +45,17 @@ public partial class StatsManager : MonoBehaviour
 
     public void AddValueToStat(GameConstants.Stats _stat, float _value)
     {
-        if (Stats.Length - 1 > (int)_stat)
-        {
-            Stats[(int)_stat].value += _value;
-            return;
-        }
-
-        Debug.Log($"Could not find Stat {_stat} to add value {_value}");
+        AddValueToStat((int)_stat, _value);
     }
 
     public void SetValueToStat(GameConstants.Stats _stat, float _value)
     {
-        if (Stats.Length - 1 > (int)_stat)
-        {
-            Stats[(int)_stat].value = _value;
-            return;
-        }
-
-        Debug.Log($"Could not find Stat {_stat} to set value {_value}");
+        SetValueToStat((int)_stat, _value);
     }
 
     public void SetMaxValueToStat(GameConstants.Stats _stat, float _value)
     {
-        if (Stats.Length - 1 > (int)_stat)
-        {
-            Stats[(int)_stat].value = Mathf.Max(Stats[(int)_stat].value, _value);
-            return;
-        }
-
-        Debug.Log($"Could not find Stat {_stat} to set max value {_value}");
+        SetMaxValueToStat((int)_stat, _value);
     }
 
     /// <summary>
@@ -82,11 +65,6 @@ public partial class StatsManager : MonoBehaviour
     /// <returns>Returns stat value or -1 if stat not found.</returns>
     public float GetValue(GameConstants.Stats _stat)
     {
-        if (Stats.Length - 1 > (int)_stat)
-        {
-            return Stats[(int)_stat].value;
-        }
-
-        return -1;
+        return GetValue((int)_stat);
     }
 }

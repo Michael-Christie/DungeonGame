@@ -25,6 +25,8 @@ public class SettingsMenu : MenuBase
 
         contentPanel.transform.localScale = Vector3.zero;
 
+        PlayerController.Instance?.DisableMovement();
+
         menuPanel.SetActive(true);
 
         StartCoroutine(PlayShowAnimation());
@@ -57,6 +59,8 @@ public class SettingsMenu : MenuBase
         //yield return GameConstants.WaitTimers.waitForFadeShort;
 
         menuPanel.SetActive(false);
+
+        PlayerController.Instance?.EnableMovement();
 
         OnHideComplete();
 

@@ -11,12 +11,4 @@ public class GameEndCollider : MonoBehaviour
             GameManager.Instance.StartEndGame();
         }
     }
-
-    private void OnTriggerExit(Collider _other)
-    {
-        if (_other.CompareTag(GameConstants.Tags.player))
-        {
-            GameManager.Instance.CancelEndGame();
-        }
-    }
 }

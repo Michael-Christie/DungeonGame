@@ -23,27 +23,15 @@ public class GameSceneController : BaseSceneLoader
         }
 
         MenuManager.Instance.ShowMenu((int)GameConstants.Menus.GameHud);
-        PlayerController.Instance.EnableCharacter();
     }
 
     public override void OnSceneStart()
     {
-        GameManager.Instance.CancelEndGame();
-
-        StartCoroutine(OpenDoors());
+        GameManager.Instance.StartGame();
+        PlayerController.Instance.EnableCharacter();
     }
 
     public override void OnSceneChange()
     {
-    }
-
-    private IEnumerator OpenDoors()
-    {
-        yield return GameConstants.WaitTimers.waitForTwoSeconds;
-
-        leftDoor.transform.DOLocalRotate(Vector3.up * -50, GameConstants.Animations.rotateTime);
-        rightDoor.transform.DOLocalRotate(Vector3.up * 65, GameConstants.Animations.rotateTime);
-
-        GameManager.Instance.StartGame();
     }
 }

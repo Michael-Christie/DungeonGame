@@ -148,31 +148,8 @@ public class GameManager : MonoBehaviour
         StartCoroutine(WaitForEndGame());
     }
 
-    public void CancelEndGame()
-    {
-        endGameCountdown = false;
-    }
-
     private IEnumerator WaitForEndGame()
     {
-        for (int i = 0; i < 3; i++)
-        {
-            //hubUI.ShowCoutdown((3 - i).ToString());
-
-            yield return GameConstants.WaitTimers.waitForOneSecond;
-            yield return GameConstants.WaitTimers.waitForPointFive;
-
-            if (!endGameCountdown)
-            {
-                yield break;
-            }
-        }
-
-        leftDoor.transform.DOLocalRotate(Vector3.zero, GameConstants.Animations.rotateTime);
-        rightDoor.transform.DOLocalRotate(Vector3.zero, GameConstants.Animations.rotateTime);
-
-        yield return GameConstants.WaitTimers.waitForRotate;
-
         yield return GameConstants.WaitTimers.waitForOneSecond;
 
         if (collectedGoal)
