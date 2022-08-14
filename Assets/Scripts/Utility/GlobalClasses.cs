@@ -19,9 +19,11 @@ public class AdvancementData: BaseValueData
 
     public GameConstants.Advancement advancementID;
 
-    public string description;
+    [XmlIgnoreAttribute] public string description;
 
-    public Reward reward = null;
+    public bool hasClaimed;
+
+    [XmlIgnoreAttribute] public Reward reward = null;
 }
 
 public class Reward

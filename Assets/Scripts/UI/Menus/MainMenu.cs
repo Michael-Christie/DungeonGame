@@ -9,6 +9,8 @@ using TMPro;
 using MC.Core;
 using MC.DiscordManager;
 
+using Image = UnityEngine.UI.Image;
+
 public class MainMenu : MenuBase
 {
     [System.Serializable]
@@ -24,6 +26,8 @@ public class MainMenu : MenuBase
 
         public TextMeshProUGUI txtPlayerName;
         public TextMeshProUGUI txtPlayerCoin;
+
+        public Image imgClassIcon;
     }
 
     [Header("Starting Screen")]
@@ -63,13 +67,15 @@ public class MainMenu : MenuBase
     [SerializeField] private TextMeshProUGUI txtClassTitle;
     [SerializeField] private TextMeshProUGUI txtClassDescription;
 
+    [SerializeField] private Sprite[] sprClassIcons;
+
     private string[] classDescriptions =
     {
-        /*Hunter*/"Hunter is the default class. It has standard movement speed and attack damange, meaning you can play this class how you like.",
-        /*Scout*/"Scout has increased movement speed but deals less damage.",
-        /*Heavy*/"Heavy has increased strength and health, but moves at a slower pace than most.",
-        /*Mage*/"Mage moves swiftly across the world, but can only use magic based weapons,",
-        /*Class4*/"Who knows what this class will be?"
+        /*Hunter*/"Hunter's is the default class. The class is balanced overall.", //Normal
+        /*Scout*/"Scout's has increased movement speed and a quieter step, making it harder for enemies to hear you. However because of your light weight, you deal less damage. \n\nIf you like to sneak around and stealth into places, this is the class for you.", //Stealth
+        /*Heavy*/"The Heavy class has got a real punch to them, dealing more damange per hit, but is slower and enemies can hear you from further away. \n\nIf you like to brute force your way through combat, this is the class for you.", //Brutes
+        /*Mage*/"The Mage is a balanced class who makes use of magic to attack from a distance. Meele Damage is reduced but movement speed is increased. \n\nIf you like to attack from a distance, this is the class for you", //Gun Mage (Magic plus rage)
+        /*Bard*/"The Bard Class has increased speed and damage, however when hit takes extra damage." //Bit of everything 
     };
 
     private GameConstants.CharacterTypes selectedType;
@@ -181,7 +187,7 @@ public class MainMenu : MenuBase
             {
                 if (_value)
                 {
-                    SelectedClass(GameConstants.CharacterTypes.Class4);
+                    SelectedClass(GameConstants.CharacterTypes.Bard);
                 }
             });
 
@@ -336,6 +342,8 @@ public class MainMenu : MenuBase
 
             saveSlots[_cardIndex].txtPlayerName.text = _data.charType.ToString();
             saveSlots[_cardIndex].txtPlayerCoin.text = _data.coin.ToString("N000");
+
+            saveSlots[_cardIndex].imgClassIcon.sprite = sprClassIcons[(int)_data.charType];
         }
     }
 

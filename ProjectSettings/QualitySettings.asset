@@ -222,6 +222,4 @@ QualitySettings:
     resolutionScalingFixedDPIFactor: 1
     customRenderPipeline: {fileID: 11400000, guid: c4d66638a7f279c459e67691c637c9a4, type: 2}
     excludedTargetPlatforms: []
-  m_PerPlatformDefaultQuality:
-    Standalone: 5
-    WebGL: 0
+  m_PerPlatformDefaultQuality: {}

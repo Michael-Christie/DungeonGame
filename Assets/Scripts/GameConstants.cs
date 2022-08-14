@@ -134,7 +134,7 @@ public static class GameConstants
         Scout, //Quick movement, Light attack, light defence
         Heavy, //Slow movement, heavy attack, heavy defence
         Mage, //Quick movement, ranged attacks, light defence
-        Class4,
+        Bard,
     }
 
     public enum Stats

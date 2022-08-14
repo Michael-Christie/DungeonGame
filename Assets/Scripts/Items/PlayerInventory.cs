@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 [System.Serializable]
 public class Inventory
@@ -31,12 +32,18 @@ public class PlayerInventory : MonoBehaviour
 {
     public static PlayerInventory Instance { get; private set; }
 
-    public Inventory[] Inventory { get; private set; } = new Inventory[25];
+    public Inventory[] Inventory /*{ get; set; }*/ = new Inventory[25];
 
     public Action onInventoryUpdate;
-    public Action onHotbarUpdate;
+    public Action<int> onHotbarUpdate;
 
     [SerializeField] private ItemData hotbarItem;
+
+    private int hotbarIndex = 0;
+
+    [SerializeField] private Transform handHolder;
+
+    private GameObject itemInHand = null;
 
     //
     private void Awake()
@@ -52,12 +59,11 @@ public class PlayerInventory : MonoBehaviour
         }
     }
 
-    private bool tempBool;
     private void Update()
     {
         if (Input.GetKeyDown(KeyCode.Tab))
         {
-            if (!tempBool)
+            if (MenuManager.Instance.CurrentMenu != MenuManager.Instance.GetMenuAtIndex((int)GameConstants.Menus.Inventory))
             {
                 MenuManager.Instance.ShowMenu((int)GameConstants.Menus.Inventory);
             }
@@ -65,7 +71,6 @@ public class PlayerInventory : MonoBehaviour
             {
                 MenuManager.Instance.HideMenu();
             }
-            tempBool = !tempBool;
         }
         else if (Input.GetMouseButtonDown(0))
         {
@@ -74,6 +79,33 @@ public class PlayerInventory : MonoBehaviour
         else if (Input.GetMouseButtonDown(1))
         {
             hotbarItem?.OnRightClick();
+        }
+
+        if (Input.GetKeyDown(KeyCode.RightBracket))
+        {
+            hotbarIndex++;
+
+            if (hotbarIndex >= 7)
+            {
+                hotbarIndex = 0;
+            }
+
+            onHotbarUpdate?.Invoke(hotbarIndex);
+
+            UpdateHandItem();
+        }
+        else if (Input.GetKeyDown(KeyCode.LeftBracket))
+        {
+            hotbarIndex--;
+
+            if (hotbarIndex < 0)
+            {
+                hotbarIndex = 6;
+            }
+
+            onHotbarUpdate?.Invoke(hotbarIndex);
+
+            UpdateHandItem();
         }
     }
 
@@ -125,5 +157,18 @@ public class PlayerInventory : MonoBehaviour
         onInventoryUpdate?.Invoke();
 
         return true;
+    }
+
+    public void UpdateHandItem()
+    {
+        if(itemInHand != null)
+        {
+            Destroy(itemInHand);
+        }
+
+        if(Inventory[hotbarIndex].itemData != null)
+        {
+            itemInHand = Instantiate(Inventory[hotbarIndex].itemData.handObject, handHolder);
+        }
     }
 }

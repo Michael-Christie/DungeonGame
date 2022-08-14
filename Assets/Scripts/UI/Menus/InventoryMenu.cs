@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class InventoryMenu : MenuBase
 {
@@ -9,6 +10,8 @@ public class InventoryMenu : MenuBase
     private const int inventoryWidth = 5;
 
     [SerializeField] private InventorySlot[] inventorySlots;
+
+    [SerializeField] private Toggle[] hotbarItems;
 
     //
     protected override void Initalize()
@@ -55,8 +58,8 @@ public class InventoryMenu : MenuBase
         }
     }
 
-    private void UpdateHotbar()
+    private void UpdateHotbar(int _index)
     {
-
+        hotbarItems[_index].isOn = true;
     }
 }

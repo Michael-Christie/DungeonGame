@@ -24,7 +24,7 @@ public partial class StatsManager : BaseValueTracker
         //pull the stat data from somewhere.
         StatData[] _rawData = GameData.Instance.GetPlayerData().stats;
 
-        if (_rawData == null)
+        if (_rawData != null)
         {
             for (int i = 0; i < Stats.Length; i++)
             {

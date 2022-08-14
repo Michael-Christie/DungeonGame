@@ -1,8 +1,8 @@
-using System.Collections;
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerController : MonoBehaviour
+public class PlayerController : MonoBehaviour, IDamageable
 {
     public static PlayerController Instance { get; private set; }
 
@@ -26,13 +26,31 @@ public class PlayerController : MonoBehaviour
 
     private const float defaultMoveSpeed = 7.0f;
 
+    private int defaultHealth = 100;
+
     public PlayerClass playerClass { get; private set; }
+
+    public Action<int> onHealthUpdate;
 
     public Camera PlayerCamera
     {
         get
         {
             return playerCamera;
+        }
+    }
+
+    private int _currentHealth;
+    public int Health
+    {
+        get
+        {
+            return _currentHealth;
+        }
+        set
+        {
+            _currentHealth = value;
+            onHealthUpdate?.Invoke(_currentHealth);
         }
     }
 
@@ -109,5 +127,12 @@ public class PlayerController : MonoBehaviour
         playerClass = _class;
 
         advancedWalking.movementSpeed = defaultMoveSpeed * _class.Speed;
+        _currentHealth = defaultHealth = _class.Health;
+    }
+
+    public void OnDamageRecieved(int _damageAmount)
+    {
+        //Reduce/Increase the damage taking by the classes defence
+        Health -= Mathf.FloorToInt(_damageAmount * playerClass.Defence);
     }
 }

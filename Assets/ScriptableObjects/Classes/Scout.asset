@@ -12,7 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 92e1619c409162c4da952b0adde33124, type: 3}
   m_Name: Scout
   m_EditorClassIdentifier: 
-  health: 80
+  health: 100
   speed: 1.2
-  strength: 1
-  defence: 1
+  meleeDamage: 0.8
+  rangedDamage: 1
+  defence: 0.8
+  defaultWeapon: {fileID: 11400000, guid: cb7e3af1b4774e94f939f9a69e9f3570, type: 2}

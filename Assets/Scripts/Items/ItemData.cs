@@ -13,6 +13,8 @@ public class ItemData : ScriptableObject
 
     public int maxStackAmount;
 
+    public GameObject handObject;
+
     //
     public virtual void OnLeftClick()
     {

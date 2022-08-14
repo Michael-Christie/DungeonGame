@@ -11,7 +11,51 @@ public partial class AdvancementManager : BaseValueTracker
         new AdvancementData()
         {
             advancementID = GameConstants.Advancement.Killer,
-            displayName = "Killer Man",
+            DisplayName = "Catch A Ride",
+            description = "Kill 100 Enemies in on Run",
+            reward = new Reward
+                {
+                    type = GameConstants.RewardType.XP,
+                    amount = 100
+                }
+        },
+        new AdvancementData()
+        {
+            advancementID = GameConstants.Advancement.Killer,
+            DisplayName = "Killer Man",
+            description = "Kill 100 Enemies in on Run",
+            reward = new Reward
+                {
+                    type = GameConstants.RewardType.XP,
+                    amount = 100
+                }
+        },
+        new AdvancementData()
+        {
+            advancementID = GameConstants.Advancement.Killer,
+            DisplayName = "Title 2",
+            description = "Kill 100 Enemies in on Run",
+            reward = new Reward
+                {
+                    type = GameConstants.RewardType.XP,
+                    amount = 100
+                }
+        },
+        new AdvancementData()
+        {
+            advancementID = GameConstants.Advancement.Killer,
+            DisplayName = "Title 3",
+            description = "Kill 100 Enemies in on Run",
+            reward = new Reward
+                {
+                    type = GameConstants.RewardType.XP,
+                    amount = 100
+                }
+        },
+        new AdvancementData()
+        {
+            advancementID = GameConstants.Advancement.Killer,
+            DisplayName = "Title 4",
             description = "Kill 100 Enemies in on Run",
             reward = new Reward
                 {

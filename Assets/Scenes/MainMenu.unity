@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.37311953, g: 0.38074014, b: 0.3587274, a: 1}
+  m_IndirectSpecularColor: {r: 0.12731749, g: 0.13414757, b: 0.1210787, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -174,6 +174,7 @@ MonoBehaviour:
     btnCardPress: {fileID: 181054182}
     txtPlayerName: {fileID: 913029670}
     txtPlayerCoin: {fileID: 801445425}
+    imgClassIcon: {fileID: 262815337}
   - parentObject: {fileID: 855291758}
     emptyObject: {fileID: 1683789812}
     filledSaveObject: {fileID: 270844298}
@@ -182,6 +183,7 @@ MonoBehaviour:
     btnCardPress: {fileID: 855291762}
     txtPlayerName: {fileID: 101875165}
     txtPlayerCoin: {fileID: 1991800482}
+    imgClassIcon: {fileID: 1892853303}
   - parentObject: {fileID: 1205297918}
     emptyObject: {fileID: 75298812}
     filledSaveObject: {fileID: 1897626347}
@@ -190,6 +192,7 @@ MonoBehaviour:
     btnCardPress: {fileID: 1205297920}
     txtPlayerName: {fileID: 1114547470}
     txtPlayerCoin: {fileID: 1832522394}
+    imgClassIcon: {fileID: 1682327473}
   btnBackToMenu: {fileID: 1256995623}
   btnCreateNew: {fileID: 2103842593}
   btnCancelNew: {fileID: 669425350}
@@ -201,6 +204,12 @@ MonoBehaviour:
   togOther: {fileID: 386708444}
   txtClassTitle: {fileID: 2040829663}
   txtClassDescription: {fileID: 1484682944}
+  sprClassIcons:
+  - {fileID: 21300000, guid: e5cff0a2dab1ba34eb389ddd1c18b123, type: 3}
+  - {fileID: 21300000, guid: 506172c2695ea5b41914c6603899d6a1, type: 3}
+  - {fileID: 21300000, guid: ce024beeb70e5974e8be3b0305278cf4, type: 3}
+  - {fileID: 21300000, guid: 4582528154c62244e98aff77309ee991, type: 3}
+  - {fileID: 21300000, guid: 13234d7cc764fa8428f8d7ed9b99ea23, type: 3}
 --- !u!4 &23781236
 Transform:
   m_ObjectHideFlags: 0
@@ -1371,6 +1380,7 @@ GameObject:
   - component: {fileID: 292444176}
   - component: {fileID: 292444175}
   - component: {fileID: 292444177}
+  - component: {fileID: 292444178}
   m_Layer: 5
   m_Name: Heavy
   m_TagString: Untagged
@@ -1418,7 +1428,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 2de3dbfcbeb3644ef9ede72cfb199a08, type: 3}
+  m_Sprite: {fileID: 21300000, guid: ce024beeb70e5974e8be3b0305278cf4, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -1484,6 +1494,18 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_IsOn: 0
+--- !u!114 &292444178
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 292444173}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cbbaa6a74d8cb704e978da73de9491b4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &386708440
 GameObject:
   m_ObjectHideFlags: 0
@@ -1496,8 +1518,9 @@ GameObject:
   - component: {fileID: 386708443}
   - component: {fileID: 386708442}
   - component: {fileID: 386708444}
+  - component: {fileID: 386708445}
   m_Layer: 5
-  m_Name: Other
+  m_Name: Bard
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1543,7 +1566,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 2de3dbfcbeb3644ef9ede72cfb199a08, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 13234d7cc764fa8428f8d7ed9b99ea23, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -1609,6 +1632,18 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_IsOn: 0
+--- !u!114 &386708445
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 386708440}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cbbaa6a74d8cb704e978da73de9491b4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &402426556
 GameObject:
   m_ObjectHideFlags: 0
@@ -1747,7 +1782,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &406755772
 RectTransform:
   m_ObjectHideFlags: 0
@@ -2062,6 +2097,7 @@ GameObject:
   - component: {fileID: 535119238}
   - component: {fileID: 535119237}
   - component: {fileID: 535119236}
+  - component: {fileID: 535119239}
   m_Layer: 0
   m_Name: Main Menu Camera
   m_TagString: MainCamera
@@ -2134,6 +2170,38 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &535119239
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 535119235}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a79441f348de89743a2939f4d699eac1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_RenderShadows: 1
+  m_RequiresDepthTextureOption: 2
+  m_RequiresOpaqueTextureOption: 2
+  m_CameraType: 0
+  m_Cameras: []
+  m_RendererIndex: -1
+  m_VolumeLayerMask:
+    serializedVersion: 2
+    m_Bits: 1
+  m_VolumeTrigger: {fileID: 0}
+  m_RenderPostProcessing: 0
+  m_Antialiasing: 0
+  m_AntialiasingQuality: 2
+  m_StopNaN: 0
+  m_Dithering: 0
+  m_ClearDepth: 1
+  m_AllowXRRendering: 1
+  m_RequiresDepthTexture: 0
+  m_RequiresColorTexture: 0
+  m_Version: 2
 --- !u!1 &535827844
 GameObject:
   m_ObjectHideFlags: 0
@@ -5094,6 +5162,7 @@ GameObject:
   - component: {fileID: 1438475561}
   - component: {fileID: 1438475560}
   - component: {fileID: 1438475562}
+  - component: {fileID: 1438475563}
   m_Layer: 5
   m_Name: Mage
   m_TagString: Untagged
@@ -5114,7 +5183,7 @@ RectTransform:
   m_Children:
   - {fileID: 1393494743}
   m_Father: {fileID: 1842309912}
-  m_RootOrder: 1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -5141,7 +5210,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 2de3dbfcbeb3644ef9ede72cfb199a08, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 4582528154c62244e98aff77309ee991, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -5207,6 +5276,18 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_IsOn: 0
+--- !u!114 &1438475563
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1438475558}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cbbaa6a74d8cb704e978da73de9491b4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1480865120
 GameObject:
   m_ObjectHideFlags: 0
@@ -6127,8 +6208,9 @@ GameObject:
   - component: {fileID: 1665225931}
   - component: {fileID: 1665225930}
   - component: {fileID: 1665225932}
+  - component: {fileID: 1665225933}
   m_Layer: 5
-  m_Name: Normal
+  m_Name: Hunter
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -6174,7 +6256,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 2de3dbfcbeb3644ef9ede72cfb199a08, type: 3}
+  m_Sprite: {fileID: 21300000, guid: e5cff0a2dab1ba34eb389ddd1c18b123, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -6240,6 +6322,18 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_IsOn: 1
+--- !u!114 &1665225933
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1665225928}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cbbaa6a74d8cb704e978da73de9491b4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1671102415
 GameObject:
   m_ObjectHideFlags: 0
@@ -6252,6 +6346,7 @@ GameObject:
   - component: {fileID: 1671102418}
   - component: {fileID: 1671102417}
   - component: {fileID: 1671102419}
+  - component: {fileID: 1671102420}
   m_Layer: 5
   m_Name: Scout
   m_TagString: Untagged
@@ -6272,7 +6367,7 @@ RectTransform:
   m_Children:
   - {fileID: 53923662}
   m_Father: {fileID: 1842309912}
-  m_RootOrder: 0
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -6299,7 +6394,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 2de3dbfcbeb3644ef9ede72cfb199a08, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 506172c2695ea5b41914c6603899d6a1, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -6365,6 +6460,18 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_IsOn: 0
+--- !u!114 &1671102420
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1671102415}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cbbaa6a74d8cb704e978da73de9491b4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1679660551
 GameObject:
   m_ObjectHideFlags: 0
@@ -7134,8 +7241,8 @@ RectTransform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
-  - {fileID: 1671102416}
   - {fileID: 1438475559}
+  - {fileID: 1671102416}
   - {fileID: 1665225929}
   - {fileID: 292444174}
   - {fileID: 386708441}

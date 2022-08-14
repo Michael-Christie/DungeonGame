@@ -7,6 +7,8 @@ public class WeaponData : ItemData
 {
     public AnimationCurve stat;
 
+    public int baseDamage;
+
     //
     public override void OnLeftClick()
     {
@@ -14,8 +16,7 @@ public class WeaponData : ItemData
 
         if (Physics.Raycast(_ray, out RaycastHit _hit, 10f, ~0)) 
         {
-            _hit.collider.GetComponent<IDamageable>()?.OnDamageRecieved(50);
-
+            _hit.collider.GetComponent<IDamageable>()?.OnDamageRecieved(Mathf.FloorToInt(baseDamage * PlayerController.Instance.playerClass.MeleeDamage));
         }
     }
 }
