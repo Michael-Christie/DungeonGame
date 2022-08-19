@@ -13,8 +13,8 @@ MonoBehaviour:
   m_Name: DefaltHunterWeapon
   m_EditorClassIdentifier: 
   itemName: 
-  itemIcon: {fileID: 0}
-  itemID: 0
+  itemIcon: {fileID: 21300000, guid: e749a8e2e042fc844b0f16fa187d2331, type: 3}
+  itemID: 6
   maxStackAmount: 1
   handObject: {fileID: 176636, guid: b4ea2f3e0e40943219a8997915f71646, type: 3}
   stat:

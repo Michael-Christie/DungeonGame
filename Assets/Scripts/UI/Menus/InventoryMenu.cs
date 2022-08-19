@@ -13,6 +13,8 @@ public class InventoryMenu : MenuBase
 
     [SerializeField] private Toggle[] hotbarItems;
 
+    [SerializeField] private Image[] hotbarImage;
+
     //
     protected override void Initalize()
     {
@@ -55,6 +57,18 @@ public class InventoryMenu : MenuBase
         for(int i = 0; i < inventorySlots.Length; i++)
         {
             inventorySlots[i].SetUp(_inventory[i].itemData, _inventory[i].amount);
+
+            if(i < hotbarImage.Length)
+            {
+                if (_inventory[i].itemData)
+                {
+                    hotbarImage[i].overrideSprite = _inventory[i].itemData.itemIcon;
+                }
+                else
+                {
+                    hotbarImage[i].overrideSprite = null;
+                }
+            }
         }
     }
 

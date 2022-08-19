@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 421366}
   - component: {fileID: 3354218}
   - component: {fileID: 2357042}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Crossbow
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -93,7 +93,7 @@ GameObject:
   - component: {fileID: 439570}
   - component: {fileID: 3347998}
   - component: {fileID: 2324492}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Arrow_Small
   m_TagString: Untagged
   m_Icon: {fileID: 0}

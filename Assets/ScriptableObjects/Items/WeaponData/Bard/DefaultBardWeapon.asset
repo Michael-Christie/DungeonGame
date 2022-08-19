@@ -13,8 +13,8 @@ MonoBehaviour:
   m_Name: DefaultBardWeapon
   m_EditorClassIdentifier: 
   itemName: 
-  itemIcon: {fileID: 0}
-  itemID: 0
+  itemIcon: {fileID: 21300000, guid: 039b7ca4b9e8ddd499a4a0b2b372bff5, type: 3}
+  itemID: 3
   maxStackAmount: 1
   handObject: {fileID: 167016, guid: 1dcc6f17f2ad24b98a7ef082c8c454a9, type: 3}
   stat:

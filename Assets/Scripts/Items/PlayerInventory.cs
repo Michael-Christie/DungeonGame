@@ -32,7 +32,7 @@ public class PlayerInventory : MonoBehaviour
 {
     public static PlayerInventory Instance { get; private set; }
 
-    public Inventory[] Inventory /*{ get; set; }*/ = new Inventory[25];
+    public Inventory[] Inventory /*{ get; set; }*/ = new Inventory[35];
 
     public Action onInventoryUpdate;
     public Action<int> onHotbarUpdate;
@@ -168,7 +168,7 @@ public class PlayerInventory : MonoBehaviour
 
         if(Inventory[hotbarIndex].itemData != null)
         {
-            itemInHand = Instantiate(Inventory[hotbarIndex].itemData.handObject, handHolder);
+            itemInHand = Instantiate(Inventory[hotbarIndex].itemData.handObject, handHolder.transform.position, handHolder.transform.rotation * Inventory[hotbarIndex].itemData.handObject.transform.rotation, handHolder);
         }
     }
 }

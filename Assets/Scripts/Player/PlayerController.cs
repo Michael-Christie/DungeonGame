@@ -128,6 +128,10 @@ public class PlayerController : MonoBehaviour, IDamageable
 
         advancedWalking.movementSpeed = defaultMoveSpeed * _class.Speed;
         _currentHealth = defaultHealth = _class.Health;
+
+        int _amount = 1;
+
+        PlayerInventory.Instance.AddItem(_class.DefaultWeapon, ref _amount);
     }
 
     public void OnDamageRecieved(int _damageAmount)

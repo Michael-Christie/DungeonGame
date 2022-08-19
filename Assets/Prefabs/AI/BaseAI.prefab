@@ -133,6 +133,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   navMeshAgent: {fileID: 5703747909256114273}
+  sightDistance: 100
+  movementSpeed: 3.5
   hitMask:
     serializedVersion: 2
     m_Bits: 4294967295

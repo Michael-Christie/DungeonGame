@@ -6,32 +6,55 @@ using UnityEngine.AI;
 public enum EnemyState
 {
     Idle,
-    Chasing,
+    Follow,
     Attacking
 }
 
 public class BaseEnemyAI : BaseEntity, IPoolable, IDamageable
 {
-    public int PoolID => (int)GameConstants.EntityID.BaseAI;
+    public virtual int PoolID => (int)GameConstants.EntityID.BaseAI;
 
     public bool IsInScene { get; set; }
 
-    public int Health { get; set; } = 100;
+    public virtual int Health { get; set; } = 100;
 
     [SerializeField] private NavMeshAgent navMeshAgent;
 
-    public EnemyState currentState { get; private set; } = EnemyState.Idle;
+    public EnemyState CurrentState { get; private set; } = EnemyState.Idle;
 
-    protected float sightDistance = 100;
+    [SerializeField] protected float sightDistance = 100;
+    [SerializeField] protected float movementSpeed = 3.5f;
+
+    protected float distanceToTargetPos;
 
     [SerializeField] private LayerMask hitMask;
 
     private Vector3? lastSeenPosition;
 
+    private Vector3 _targetPos;
+    protected Vector3 TargetPosition
+    {
+        get
+        {
+            return _targetPos;
+        }
+        set
+        {
+            _targetPos = value;
+            navMeshAgent.SetDestination(_targetPos);
+            navMeshAgent.isStopped = false;
+        }
+    }
+
     [SerializeField] private Material redFlash;
     [SerializeField] private Material whiteDefault;
 
     [SerializeField] private MeshRenderer meshRenderer;
+
+    //Idle Stuff
+    private float idleTime;
+
+    private bool isIdleMoving;
 
     //
     #region Interfaces
@@ -45,7 +68,7 @@ public class BaseEnemyAI : BaseEntity, IPoolable, IDamageable
 
         gameObject.transform.SetParent(ObjectPooler.Instance.transform);
 
-        currentState = EnemyState.Idle;
+        CurrentState = EnemyState.Idle;
     }
 
     public void SetPosition(Transform _newParent)
@@ -61,6 +84,10 @@ public class BaseEnemyAI : BaseEntity, IPoolable, IDamageable
         gameObject.SetActive(true);
 
         navMeshAgent.enabled = true;
+
+        _targetPos = _position;
+
+        AIManager.Instance?.RegisterAgent(this);
     }
 
     ///#IDamagable
@@ -68,7 +95,7 @@ public class BaseEnemyAI : BaseEntity, IPoolable, IDamageable
     {
         Health -= _damageAmount;
 
-        if(Health > 0)
+        if (Health > 0)
         {
             StartCoroutine(IChangeColor());
 
@@ -78,47 +105,95 @@ public class BaseEnemyAI : BaseEntity, IPoolable, IDamageable
         //Entity has been killed..
         GameManager.Instance.AddKillToScore();
         ReturnToPool();
+
+        AIManager.Instance?.UnRegisterAgent(this);
     }
     #endregion
 
-    //Temp update function, OnEntityUpdate should be controlled by game manager
-    private void FixedUpdate()
+    #region Virtuals
+    protected virtual void IdleUpdate(float _time)
     {
-        OnEntityUpdate();
-    }
-
-    public void OnEntityUpdate()
-    {
-        if (CanSeePlayer())
+        //Do small movements basically
+        if (!isIdleMoving)
         {
-            currentState = EnemyState.Chasing;
-            navMeshAgent.isStopped = false;
-        }
-        else
-        {
-            currentState = EnemyState.Idle;
-            IdleUpdate();
-        }
+            //Pick a spot to move too
+            Vector3 _desiredPos = transform.position + new Vector3(Random.Range(-5, 5), 0, Random.Range(-5, 5));
 
-        if (lastSeenPosition.HasValue)
-        {
-            navMeshAgent.SetDestination(lastSeenPosition.Value);
-
-            if (Vector3.Distance(transform.position, lastSeenPosition.Value) < 2.5f)
+            if (NavMesh.SamplePosition(_desiredPos, out NavMeshHit _hit, 1.0f, ~0))
             {
-                navMeshAgent.isStopped = true;
+                TargetPosition = _hit.position;
+                isIdleMoving = true;
+                idleTime = 0;
+            }
+        }
 
-                lastSeenPosition = null;
+        if(distanceToTargetPos < 1.5f 
+            && isIdleMoving)
+        {
+            //start the idle countdown
+            idleTime += _time;
 
-                currentState = EnemyState.Idle;
+            if(idleTime > 5.0f)
+            {
+                isIdleMoving = false;
             }
         }
     }
-    
+
+    protected virtual void AttackUpdate(float _time)
+    {
+
+    }
+
+    protected virtual void FollowUpdate(float _time)
+    {
+        TargetPosition = lastSeenPosition.Value;
+
+        if(distanceToTargetPos < 2.5f
+            || distanceToTargetPos > sightDistance)
+        {
+            navMeshAgent.isStopped = true;
+            CurrentState = EnemyState.Idle;
+        }
+    }
+    #endregion
+
+    #region Updates
+    public void OnEntityUpdate(float _deltaTime)
+    {
+        distanceToTargetPos = (TargetPosition - transform.position).magnitude;
+
+        switch (CurrentState)
+        {
+            case EnemyState.Idle:
+                IdleUpdate(_deltaTime);
+                break;
+
+            case EnemyState.Attacking:
+                AttackUpdate(_deltaTime);
+                break;
+
+            case EnemyState.Follow:
+                FollowUpdate(_deltaTime);
+                break;
+        }
+
+        SetSpeedFromState(CurrentState);
+    }
+
+    public void OnEntityFixedUpdate(float _fixedDeltaTime)
+    {
+        if (CanSeePlayer())
+        {
+            CurrentState = EnemyState.Follow;
+        }
+    }
+    #endregion
+
     private bool CanSeePlayer()
     {
         Ray _ray = new Ray(transform.position, (PlayerController.Instance.PlayerCamera.transform.position - transform.position).normalized);
-        if(Physics.Raycast(_ray, out RaycastHit _hit, sightDistance, hitMask))
+        if (Physics.Raycast(_ray, out RaycastHit _hit, sightDistance, hitMask))
         {
             if (_hit.collider.CompareTag(GameConstants.Tags.player))
             {
@@ -132,15 +207,32 @@ public class BaseEnemyAI : BaseEntity, IPoolable, IDamageable
         return false;
     }
 
-    private void IdleUpdate()
-    {
-        //Do small movements basically
-    }
-
     private IEnumerator IChangeColor()
     {
         meshRenderer.material = redFlash;
-        yield return GameConstants.WaitTimers.waitForPointFive;
+        yield return GameConstants.WaitTimers.waitForPointOne;
         meshRenderer.material = whiteDefault;
+    }
+
+    private void OnDrawGizmos()
+    {
+        Gizmos.DrawSphere(TargetPosition, 0.1f);
+    }
+
+    private void SetSpeedFromState(EnemyState _state)
+    {
+        switch (_state)
+        {
+            case EnemyState.Idle:
+                navMeshAgent.speed = 1;
+                navMeshAgent.acceleration = 2;
+                break;
+
+            case EnemyState.Attacking:
+            case EnemyState.Follow:
+                navMeshAgent.speed = movementSpeed;
+                navMeshAgent.acceleration = 8;
+                break;
+        }
     }
 }

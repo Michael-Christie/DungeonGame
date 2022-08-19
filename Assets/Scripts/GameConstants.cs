@@ -107,8 +107,13 @@ public static class GameConstants
 
     public enum ItemID
     {
-        Artefact = 1,
-        Coins = 2,
+        Artefact,
+        Coins,
+        BardDefault,
+        BruteDefault,
+        GunMageDefault,
+        HunterDefault,
+        ScoutDefault
     }
 
     public enum EnemyID
