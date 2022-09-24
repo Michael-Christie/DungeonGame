@@ -49,7 +49,7 @@ public class InventoryMenu : MenuBase
         MenuManager.Instance.HideMenu();
     }
 
-    private void PopulateInventoryMenu()
+    public void PopulateInventoryMenu()
     {
         Inventory[] _inventory = PlayerInventory.Instance.Inventory;
 

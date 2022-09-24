@@ -20,11 +20,11 @@ public class BootLoaderUI : MonoBehaviour
     //
     private void Start()
     {
-        CoreBootLoader.Instance.ShowLoadingScene += ShowLoadingScreen;
-        CoreBootLoader.Instance.UpdateLoadPercentage += UpdateLoadingPercentage;
+        CoreCallback.Instance.showLoadingScene += ShowLoadingScreen;
+        CoreCallback.Instance.updateLoadPercentage += UpdateLoadingPercentage;
     }
 
-    private void ShowLoadingScreen(bool _shouldShow)
+    private void ShowLoadingScreen(bool _shouldShow, int _sceneID)
     {
         if (_shouldShow)
         {

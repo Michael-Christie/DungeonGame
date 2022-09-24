@@ -168,7 +168,7 @@ public class PlayerInventory : MonoBehaviour
 
         if(Inventory[hotbarIndex].itemData != null)
         {
-            itemInHand = Instantiate(Inventory[hotbarIndex].itemData.handObject, handHolder.transform.position, handHolder.transform.rotation * Inventory[hotbarIndex].itemData.handObject.transform.rotation, handHolder);
+            itemInHand = Instantiate(Inventory[hotbarIndex].itemData.handObject, handHolder.transform.position + Inventory[hotbarIndex].itemData.handObject.transform.position, handHolder.transform.rotation * Inventory[hotbarIndex].itemData.handObject.transform.rotation, handHolder);
         }
     }
 }

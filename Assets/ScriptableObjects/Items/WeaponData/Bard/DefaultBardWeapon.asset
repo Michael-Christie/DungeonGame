@@ -14,9 +14,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemName: 
   itemIcon: {fileID: 21300000, guid: 039b7ca4b9e8ddd499a4a0b2b372bff5, type: 3}
-  itemID: 3
+  itemID: 2
   maxStackAmount: 1
-  handObject: {fileID: 167016, guid: 1dcc6f17f2ad24b98a7ef082c8c454a9, type: 3}
+  handObject: {fileID: 6231325237256774667, guid: 956a1ab0ff6ebf7418125a284024ba00, type: 3}
   stat:
     serializedVersion: 2
     m_Curve: []

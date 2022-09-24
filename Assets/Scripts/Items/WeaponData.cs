@@ -16,6 +16,8 @@ public class WeaponData : ItemData
 
         if (Physics.Raycast(_ray, out RaycastHit _hit, 10f, ~0)) 
         {
+            Debug.Log($"{baseDamage} * {PlayerController.Instance.playerClass.MeleeDamage} = {baseDamage * PlayerController.Instance.playerClass.MeleeDamage}");
+
             _hit.collider.GetComponent<IDamageable>()?.OnDamageRecieved(Mathf.FloorToInt(baseDamage * PlayerController.Instance.playerClass.MeleeDamage));
         }
     }

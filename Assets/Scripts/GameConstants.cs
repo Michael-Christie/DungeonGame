@@ -68,6 +68,11 @@ public static class GameConstants
         public static string ErrorSave = "/ErrorSave.dat";
     }
 
+    public static class Editor
+    {
+        public const float blockSpace = 2.0f;
+    }
+
     public enum Scenes
     {
         BootLoader = 0,

@@ -25,6 +25,8 @@ public class HubSceneController : BaseSceneLoader
         {
             MCDiscordManager.Instance.SetActivity("In Hub", "");
         }
+
+        (MenuManager.Instance.GetMenuAtIndex((int)GameConstants.Menus.Inventory) as InventoryMenu).PopulateInventoryMenu();
     }
 
     public override void OnSceneChange()

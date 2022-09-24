@@ -24,8 +24,9 @@ public class BaseEnemyAI : BaseEntity, IPoolable, IDamageable
 
     [SerializeField] protected float sightDistance = 100;
     [SerializeField] protected float movementSpeed = 3.5f;
-
     protected float distanceToTargetPos;
+
+    private bool sawPlayer;
 
     [SerializeField] private LayerMask hitMask;
 
@@ -93,6 +94,8 @@ public class BaseEnemyAI : BaseEntity, IPoolable, IDamageable
     ///#IDamagable
     public void OnDamageRecieved(int _damageAmount)
     {
+        Debug.Log($"Dealing {_damageAmount} damage");
+        
         Health -= _damageAmount;
 
         if (Health > 0)
@@ -149,11 +152,17 @@ public class BaseEnemyAI : BaseEntity, IPoolable, IDamageable
     {
         TargetPosition = lastSeenPosition.Value;
 
-        if(distanceToTargetPos < 2.5f
-            || distanceToTargetPos > sightDistance)
+        if(distanceToTargetPos < 2.5f 
+           && !sawPlayer)
         {
             navMeshAgent.isStopped = true;
             CurrentState = EnemyState.Idle;
+        }
+        else if(distanceToTargetPos < 2.5f
+            && sawPlayer)
+        {
+            //Try Attacking??
+
         }
     }
     #endregion
@@ -200,10 +209,12 @@ public class BaseEnemyAI : BaseEntity, IPoolable, IDamageable
                 //hit the player...
                 lastSeenPosition = _hit.collider.transform.position;
 
+                sawPlayer = true;
                 return true;
             }
         }
 
+        sawPlayer = false;
         return false;
     }
 
