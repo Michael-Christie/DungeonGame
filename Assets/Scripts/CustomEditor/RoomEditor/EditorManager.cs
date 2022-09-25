@@ -9,6 +9,8 @@ public class EditorManager : MonoBehaviour
 
     [SerializeField] private Transform roomRoot;
 
+    private Dictionary<Vector3Int, Transform> chunk = new Dictionary<Vector3Int, Transform>();
+
     private GameObject cachedBlock;
 
     private string path = "Assets/Prefabs/Rooms/";
@@ -21,6 +23,8 @@ public class EditorManager : MonoBehaviour
     private void Awake()
     {
         Instance = this;
+
+        PlaceBlock(BlockType.Stone, Vector3.zero, new RaycastHit());
     }
 
     private void Update()
@@ -47,9 +51,27 @@ public class EditorManager : MonoBehaviour
 
         Quaternion _rotation = BlockManager.Instance.GetBlockRotation(_type, _hit.point, _hit.normal);
 
+        //Find which Chunk to put the block in
+        Vector3Int _chunkPos = new Vector3Int(Mathf.FloorToInt(_position.x / 8f), Mathf.FloorToInt(_position.y / 8f), Mathf.FloorToInt(_position.z / 8f));
+
+        if (!chunk.ContainsKey(_chunkPos))
+        {
+            GameObject _newChunk = new GameObject();
+            _newChunk.transform.parent = roomRoot;
+            _newChunk.transform.position = (_chunkPos * 16) + new Vector3(7f, 7f, 7f);
+
+            _newChunk.AddComponent<BoxCollider>().size = new Vector3(16f, 16f, 16f);
+
+            _newChunk.layer = GameConstants.Editor.ChunkLayer;
+
+            _newChunk.name = $"Chunk({_chunkPos.x},{_chunkPos.y},{_chunkPos.z})";
+
+            chunk.Add(_chunkPos, _newChunk.transform);
+        }
+
         if (cachedBlock)
         {
-            Instantiate(cachedBlock, _position * GameConstants.Editor.blockSpace, _rotation, roomRoot);
+            Instantiate(cachedBlock, _position * GameConstants.Editor.blockSpace, _rotation, chunk[_chunkPos]);
         }
     }
 
@@ -58,8 +80,6 @@ public class EditorManager : MonoBehaviour
         string _localPath = $"{path}{assetName}.prefab";
 
         _localPath = AssetDatabase.GenerateUniqueAssetPath(_localPath);
-
-        Debug.Log(_localPath);
 
         PrefabUtility.SaveAsPrefabAsset(roomRoot.gameObject, _localPath, out bool _success);
 

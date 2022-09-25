@@ -125,7 +125,7 @@ public class EditorCameraController : MonoBehaviour
 
             bool _isTopOfBlock = _hit.point.y - Mathf.FloorToInt(_hit.point.y) > 0.5f;
 
-            EditorManager.Instance.PlaceBlock(BlockType.OakLog, blockPlacePos, _hit);
+            EditorManager.Instance.PlaceBlock(BlockType.Stone, blockPlacePos, _hit);
         }
     }
 
