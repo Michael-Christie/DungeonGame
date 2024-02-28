@@ -5,72 +5,75 @@ using UnityEngine;
 using UnityEngine.UI;
 using DG.Tweening;
 
-public class SettingsMenu : MenuBase
+namespace UI.Menus
 {
-    [SerializeField] private Button btnClose;
-
-    [SerializeField] private GameObject contentPanel;
-
-    [SerializeField] private CanvasGroup fadeGroup;
-
-    //
-    protected override void Initalize()
+    public class SettingsMenu : MenuBase
     {
-        btnClose.onClick.AddListener(CloseMenu);
-    }
+        [SerializeField] private Button btnClose;
 
-    public override void Show(Action _onFinishShow = null)
-    {
-        base.Show(_onFinishShow);
+        [SerializeField] private GameObject contentPanel;
 
-        contentPanel.transform.localScale = Vector3.zero;
+        [SerializeField] private CanvasGroup fadeGroup;
 
-        PlayerController.Instance?.DisableMovement();
+        //
+        protected override void Initalize()
+        {
+            btnClose.onClick.AddListener(CloseMenu);
+        }
 
-        menuPanel.SetActive(true);
+        public override void Show(Action _onFinishShow = null)
+        {
+            base.Show(_onFinishShow);
 
-        StartCoroutine(PlayShowAnimation());
-    }
+            contentPanel.transform.localScale = Vector3.zero;
 
-    protected override IEnumerator PlayShowAnimation()
-    {
-        //fadeGroup.DOFade(1, GameConstants.Animations.fadeTimeShort);
-        //yield return GameConstants.WaitTimers.waitForFadeShort;
+            PlayerController.Instance?.DisableMovement();
 
-        contentPanel.transform.DOScale(Vector3.one, GameConstants.Animations.scaleTimeShort);
-        yield return GameConstants.WaitTimers.waitForScale;
+            menuPanel.SetActive(true);
 
-        OnShowComplete();
-    }
+            StartCoroutine(PlayShowAnimation());
+        }
 
-    public override void Hide(Action _onFinishHide = null)
-    {
-        base.Hide(_onFinishHide);
+        protected override IEnumerator PlayShowAnimation()
+        {
+            //fadeGroup.DOFade(1, GameConstants.Animations.fadeTimeShort);
+            //yield return GameConstants.WaitTimers.waitForFadeShort;
 
-        StartCoroutine(PlayHideAnimation());
-    }
+            contentPanel.transform.DOScale(Vector3.one, GameConstants.Animations.scaleTimeShort);
+            yield return GameConstants.WaitTimers.waitForScale;
 
-    protected override IEnumerator PlayHideAnimation()
-    {
-        contentPanel.transform.DOScale(Vector3.zero, GameConstants.Animations.scaleTimeShort);
-        yield return GameConstants.WaitTimers.waitForScaleShort;
+            OnShowComplete();
+        }
 
-        //fadeGroup.DOFade(0, GameConstants.Animations.fadeTimeShort);
-        //yield return GameConstants.WaitTimers.waitForFadeShort;
+        public override void Hide(Action _onFinishHide = null)
+        {
+            base.Hide(_onFinishHide);
 
-        menuPanel.SetActive(false);
+            StartCoroutine(PlayHideAnimation());
+        }
 
-        PlayerController.Instance?.EnableMovement();
+        protected override IEnumerator PlayHideAnimation()
+        {
+            contentPanel.transform.DOScale(Vector3.zero, GameConstants.Animations.scaleTimeShort);
+            yield return GameConstants.WaitTimers.waitForScaleShort;
 
-        OnHideComplete();
+            //fadeGroup.DOFade(0, GameConstants.Animations.fadeTimeShort);
+            //yield return GameConstants.WaitTimers.waitForFadeShort;
 
-        //MC.Core.CoreBootLoader.Instance.RemoveScene((int)GameConstants.Scenes.Settings);
-    }
+            menuPanel.SetActive(false);
 
-    private void CloseMenu()
-    {
-        AudioManager.Instance.PlaySoundEffect(GameConstants.SoundClip.ButtonPress);
-        //Hide();
-        MenuManager.Instance.HideMenu();
+            PlayerController.Instance?.EnableMovement();
+
+            OnHideComplete();
+
+            //MC.Core.CoreBootLoader.Instance.RemoveScene((int)GameConstants.Scenes.Settings);
+        }
+
+        private void CloseMenu()
+        {
+            AudioManager.Instance.PlaySoundEffect(GameConstants.SoundClip.ButtonPress);
+            //Hide();
+            MenuManager.Instance.HideMenu();
+        }
     }
 }

@@ -71,6 +71,8 @@ public static class GameConstants
     public static class Editor
     {
         public const float blockSpace = 2.0f;
+
+        public const int ChunkLayer = 10;
     }
 
     public enum Scenes

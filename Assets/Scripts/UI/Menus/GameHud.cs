@@ -6,59 +6,62 @@ using DG.Tweening;
 using System;
 using TMPro;
 
-public class GameHud : MenuBase
+namespace UI.Menus
 {
-    [SerializeField] private TextMeshProUGUI txtTimer;
-
-    [SerializeField] private Slider healthBar;
-
-    //
-    protected override void Initalize()
+    public class GameHud : MenuBase
     {
-        PlayerController.Instance.onHealthUpdate += UpdateHealth;
-        healthBar.maxValue = PlayerController.Instance.playerClass.Health;
-    }
+        [SerializeField] private TextMeshProUGUI txtTimer;
 
-    public override void Show(Action _onShowComplete)
-    {
-        base.Show(_onShowComplete);
+        [SerializeField] private Slider healthBar;
 
-        menuPanel.SetActive(true);
+        //
+        protected override void Initalize()
+        {
+            PlayerController.Instance.onHealthUpdate += UpdateHealth;
+            healthBar.maxValue = PlayerController.Instance.playerClass.Health;
+        }
 
-        healthBar.value = PlayerController.Instance.Health;
+        public override void Show(Action _onShowComplete)
+        {
+            base.Show(_onShowComplete);
 
-        GameManager.Instance.onTimerUpdate += UpdateTimer;
+            menuPanel.SetActive(true);
 
-        OnShowComplete();
-    }
+            healthBar.value = PlayerController.Instance.Health;
 
-    public override void Hide(Action _onHideComplete)
-    {
-        base.Hide(_onHideComplete);
+            GameManager.Instance.onTimerUpdate += UpdateTimer;
 
-        menuPanel.SetActive(false);
+            OnShowComplete();
+        }
 
-        GameManager.Instance.onTimerUpdate -= UpdateTimer;
+        public override void Hide(Action _onHideComplete)
+        {
+            base.Hide(_onHideComplete);
 
-        OnHideComplete();
-    }
+            menuPanel.SetActive(false);
 
-    public override void OnEscHit()
-    {
-        MenuManager.Instance.ShowMenu((int)GameConstants.Menus.Pause);
-    }
+            GameManager.Instance.onTimerUpdate -= UpdateTimer;
 
-    /// <summary>
-    /// Updates the hearts on the Hud
-    /// </summary>
-    /// <param name="_currentHealth">A number between 0 and max health (12)</param>
-    private void UpdateHealth(int _currentHealth)
-    {
-        healthBar.DOValue(_currentHealth, GameConstants.Animations.shakeTimeShort);
-    }
+            OnHideComplete();
+        }
 
-    public void UpdateTimer(GameTime _time)
-    {
-        txtTimer.text = _time.ToString();
+        public override void OnEscHit()
+        {
+            MenuManager.Instance.ShowMenu((int)GameConstants.Menus.Pause);
+        }
+
+        /// <summary>
+        /// Updates the hearts on the Hud
+        /// </summary>
+        /// <param name="_currentHealth">A number between 0 and max health (12)</param>
+        private void UpdateHealth(int _currentHealth)
+        {
+            healthBar.DOValue(_currentHealth, GameConstants.Animations.shakeTimeShort);
+        }
+
+        public void UpdateTimer(GameTime _time)
+        {
+            txtTimer.text = _time.ToString();
+        }
     }
 }

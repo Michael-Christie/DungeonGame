@@ -7,6 +7,7 @@ using DG.Tweening;
 using MC.Core;
 using MC.DiscordManager;
 using System;
+using UI.Menus;
 
 public class GameSceneController : BaseSceneLoader
 {

@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 3309365056356450211}
   - component: {fileID: 3309365056356450220}
   - component: {fileID: 6673221095648609349}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: MossyCobbleStone
   m_TagString: Untagged
   m_Icon: {fileID: 0}

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using MC.Core;
 using MC.DiscordManager;
+using UI.Menus;
 
 public class HubSceneController : BaseSceneLoader
 {

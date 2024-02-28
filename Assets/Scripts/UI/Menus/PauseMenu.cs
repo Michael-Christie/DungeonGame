@@ -6,72 +6,75 @@ using UnityEngine.UI;
 
 using MC.Core;
 
-public class PauseMenu : MenuBase
+namespace UI.Menus
 {
-    [SerializeField] private Button btnResume; 
-    [SerializeField] private Button btnSettings; 
-    [SerializeField] private Button btnQuitMenu; 
-    [SerializeField] private Button btnQuitDesktop; 
-
-    //
-    protected override void Initalize()
+    public class PauseMenu : MenuBase
     {
-        btnResume.onClick.AddListener(OnResumePressed);
-        btnSettings.onClick.AddListener(OnSettingPressed);
-        btnQuitDesktop.onClick.AddListener(OnQuitDesktop);
-        btnQuitMenu.onClick.AddListener(OnQuiteMenu);
-    }
+        [SerializeField] private Button btnResume;
+        [SerializeField] private Button btnSettings;
+        [SerializeField] private Button btnQuitMenu;
+        [SerializeField] private Button btnQuitDesktop;
 
-    public override void Show(Action _onShowComplete)
-    {
-        base.Show(_onShowComplete);
+        //
+        protected override void Initalize()
+        {
+            btnResume.onClick.AddListener(OnResumePressed);
+            btnSettings.onClick.AddListener(OnSettingPressed);
+            btnQuitDesktop.onClick.AddListener(OnQuitDesktop);
+            btnQuitMenu.onClick.AddListener(OnQuiteMenu);
+        }
 
-        menuPanel.SetActive(true);
+        public override void Show(Action _onShowComplete)
+        {
+            base.Show(_onShowComplete);
 
-        OnShowComplete();
+            menuPanel.SetActive(true);
 
-        PlayerController.Instance?.DisableMovement();
+            OnShowComplete();
 
-        GameData.Instance.SaveData();
-    }
+            PlayerController.Instance?.DisableMovement();
 
-    public override void Hide(Action _onHideComplete)
-    {
-        base.Hide(_onHideComplete);
+            GameData.Instance.SaveData();
+        }
 
-        menuPanel.SetActive(false);
+        public override void Hide(Action _onHideComplete)
+        {
+            base.Hide(_onHideComplete);
 
-        PlayerController.Instance?.EnableMovement();
+            menuPanel.SetActive(false);
 
-        OnHideComplete();
-    }
+            PlayerController.Instance?.EnableMovement();
 
-    public override void OnEscHit()
-    {
-        MenuManager.Instance.HideMenu();
-    }
+            OnHideComplete();
+        }
 
-    private void OnResumePressed()
-    {
-        MenuManager.Instance.HideMenu();
-    }
+        public override void OnEscHit()
+        {
+            MenuManager.Instance.HideMenu();
+        }
 
-    private void OnSettingPressed()
-    {
-        MenuManager.Instance.ShowMenu((int)GameConstants.Menus.Settings);
-    }
+        private void OnResumePressed()
+        {
+            MenuManager.Instance.HideMenu();
+        }
 
-    private void OnQuiteMenu()
-    {
-        CoreBootLoader.Instance.ChangeSceneCollection((int)GameConstants.SceneCollections.MainMenu);
-    }
+        private void OnSettingPressed()
+        {
+            MenuManager.Instance.ShowMenu((int)GameConstants.Menus.Settings);
+        }
 
-    private void OnQuitDesktop()
-    {
+        private void OnQuiteMenu()
+        {
+            CoreBootLoader.Instance.ChangeSceneCollection((int)GameConstants.SceneCollections.MainMenu);
+        }
+
+        private void OnQuitDesktop()
+        {
 #if UNITY_EDITOR
-        UnityEditor.EditorApplication.isPlaying = false;
+            UnityEditor.EditorApplication.isPlaying = false;
 #else
         Application.Quit();
 #endif
+        }
     }
 }

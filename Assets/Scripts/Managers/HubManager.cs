@@ -11,7 +11,7 @@ public class HubManager : MonoBehaviour
 {
     public static HubManager Instance { get; private set; }
 
-    private bool isPortalAlive;
+    private bool isPortalAlive = true;
 
     [SerializeField] private Material matPortal;
 
@@ -22,7 +22,7 @@ public class HubManager : MonoBehaviour
     {
         Instance = this;
 
-        TurnOffPortal();
+        //TurnOffPortal();
     }
 
     public void StartGameCountDown()

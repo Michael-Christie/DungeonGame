@@ -7,54 +7,58 @@ using TMPro;
 
 using DG.Tweening;
 
-public class HubHud : MenuBase
+namespace UI.Menus
 {
-    [SerializeField] private TextMeshProUGUI txtCoutdown;
 
-    public static Action<int> ShowCountdownDigit { get; private set; }
-
-    //
-    protected override void Initalize()
+    public class HubHud : MenuBase
     {
-        ShowCountdownDigit += ShowCoutdown;
-    }
+        [SerializeField] private TextMeshProUGUI txtCoutdown;
 
-    public override void Show(Action _onShowComplete)
-    {
-        base.Show(_onShowComplete);
+        public static Action<int> ShowCountdownDigit { get; private set; }
 
-        menuPanel.SetActive(true);
+        //
+        protected override void Initalize()
+        {
+            ShowCountdownDigit += ShowCoutdown;
+        }
 
-        OnShowComplete();
-    }
+        public override void Show(Action _onShowComplete)
+        {
+            base.Show(_onShowComplete);
 
-    public override void Hide(Action _onHideComplete)
-    {
-        base.Hide(_onHideComplete);
+            menuPanel.SetActive(true);
 
-        menuPanel.SetActive(false);
+            OnShowComplete();
+        }
 
-        OnHideComplete();
-    }
+        public override void Hide(Action _onHideComplete)
+        {
+            base.Hide(_onHideComplete);
 
-    public override void OnEscHit()
-    {
-        MenuManager.Instance.ShowMenu((int)GameConstants.Menus.Pause);
-    }
+            menuPanel.SetActive(false);
 
-    private void ShowCoutdown(int _value)
-    {
-        txtCoutdown.text = _value.ToString();
+            OnHideComplete();
+        }
 
-        StartCoroutine(AnimateCoutdown());
-    }
+        public override void OnEscHit()
+        {
+            MenuManager.Instance.ShowMenu((int)GameConstants.Menus.Pause);
+        }
 
-    private IEnumerator AnimateCoutdown()
-    {
-        txtCoutdown.transform.DOScale(1, GameConstants.Animations.scaleTimeShort);
+        private void ShowCoutdown(int _value)
+        {
+            txtCoutdown.text = _value.ToString();
 
-        yield return GameConstants.WaitTimers.waitForOneSecond;
+            StartCoroutine(AnimateCoutdown());
+        }
 
-        txtCoutdown.transform.DOScale(0, GameConstants.Animations.scaleTimeShort);
+        private IEnumerator AnimateCoutdown()
+        {
+            txtCoutdown.transform.DOScale(1, GameConstants.Animations.scaleTimeShort);
+
+            yield return GameConstants.WaitTimers.waitForOneSecond;
+
+            txtCoutdown.transform.DOScale(0, GameConstants.Animations.scaleTimeShort);
+        }
     }
 }

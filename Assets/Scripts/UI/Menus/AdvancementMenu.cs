@@ -4,16 +4,19 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class AdvancementMenu : MenuBase
+namespace UI.Menus
 {
-    protected override void Initalize()
+    public class AdvancementMenu : MenuBase
     {
+        protected override void Initalize()
+        {
 
-    }
+        }
 
-    public override void Show(Action _onShowComplete)
-    {
-        base.Show(_onShowComplete);
-        OnShowComplete();
+        public override void Show(Action _onShowComplete)
+        {
+            base.Show(_onShowComplete);
+            OnShowComplete();
+        }
     }
 }

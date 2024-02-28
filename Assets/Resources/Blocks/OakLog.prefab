@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 8612210746491815953}
   - component: {fileID: 6459869576450710891}
   - component: {fileID: 3829244365250220291}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: OakLog
   m_TagString: Untagged
   m_Icon: {fileID: 0}

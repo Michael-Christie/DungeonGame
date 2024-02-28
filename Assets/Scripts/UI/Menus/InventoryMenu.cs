@@ -4,76 +4,80 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class InventoryMenu : MenuBase
+namespace UI.Menus
 {
-    private const int inventoryHeight = 5;
-    private const int inventoryWidth = 5;
 
-    [SerializeField] private InventorySlot[] inventorySlots;
-
-    [SerializeField] private Toggle[] hotbarItems;
-
-    [SerializeField] private Image[] hotbarImage;
-
-    //
-    protected override void Initalize()
+    public class InventoryMenu : MenuBase
     {
-        isInitalized = true;
+        private const int inventoryHeight = 5;
+        private const int inventoryWidth = 5;
 
-        PlayerInventory.Instance.onHotbarUpdate += UpdateHotbar;
-        PlayerInventory.Instance.onInventoryUpdate += PopulateInventoryMenu;
+        [SerializeField] private InventorySlot[] inventorySlots;
 
-        PopulateInventoryMenu();
-    }
+        [SerializeField] private Toggle[] hotbarItems;
 
-    public override void Show(Action _onShowComplete)
-    {
-        base.Show(_onShowComplete);
+        [SerializeField] private Image[] hotbarImage;
 
-        menuPanel.SetActive(true);
-
-        OnShowComplete();
-    }
-
-    public override void Hide(Action _onHideComplete)
-    {
-        base.Hide(_onHideComplete);
-
-        menuPanel.SetActive(false);
-
-        OnHideComplete();
-    }
-
-    public override void OnEscHit()
-    {
-        MenuManager.Instance.HideMenu();
-    }
-
-    public void PopulateInventoryMenu()
-    {
-        Inventory[] _inventory = PlayerInventory.Instance.Inventory;
-
-        //Get the player data, to pull inventoryData
-        for(int i = 0; i < inventorySlots.Length; i++)
+        //
+        protected override void Initalize()
         {
-            inventorySlots[i].SetUp(_inventory[i].itemData, _inventory[i].amount);
+            isInitalized = true;
 
-            if(i < hotbarImage.Length)
+            PlayerInventory.Instance.onHotbarUpdate += UpdateHotbar;
+            PlayerInventory.Instance.onInventoryUpdate += PopulateInventoryMenu;
+
+            PopulateInventoryMenu();
+        }
+
+        public override void Show(Action _onShowComplete)
+        {
+            base.Show(_onShowComplete);
+
+            menuPanel.SetActive(true);
+
+            OnShowComplete();
+        }
+
+        public override void Hide(Action _onHideComplete)
+        {
+            base.Hide(_onHideComplete);
+
+            menuPanel.SetActive(false);
+
+            OnHideComplete();
+        }
+
+        public override void OnEscHit()
+        {
+            MenuManager.Instance.HideMenu();
+        }
+
+        public void PopulateInventoryMenu()
+        {
+            Inventory[] _inventory = PlayerInventory.Instance.Inventory;
+
+            //Get the player data, to pull inventoryData
+            for (int i = 0; i < inventorySlots.Length; i++)
             {
-                if (_inventory[i].itemData)
+                inventorySlots[i].SetUp(_inventory[i].itemData, _inventory[i].amount);
+
+                if (i < hotbarImage.Length)
                 {
-                    hotbarImage[i].overrideSprite = _inventory[i].itemData.itemIcon;
-                }
-                else
-                {
-                    hotbarImage[i].overrideSprite = null;
+                    if (_inventory[i].itemData)
+                    {
+                        hotbarImage[i].overrideSprite = _inventory[i].itemData.itemIcon;
+                    }
+                    else
+                    {
+                        hotbarImage[i].overrideSprite = null;
+                    }
                 }
             }
         }
-    }
 
-    private void UpdateHotbar(int _index)
-    {
-        hotbarItems[_index].isOn = true;
+        private void UpdateHotbar(int _index)
+        {
+            hotbarItems[_index].isOn = true;
+        }
     }
 }

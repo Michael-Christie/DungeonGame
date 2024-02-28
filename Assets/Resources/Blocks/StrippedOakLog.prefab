@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 6420107192401799877}
   - component: {fileID: 5024723464812397870}
   - component: {fileID: 7015197015054794344}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: StrippedOakLog
   m_TagString: Untagged
   m_Icon: {fileID: 0}

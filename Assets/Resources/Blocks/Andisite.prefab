@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 2153718285414463607}
   - component: {fileID: 6075729282165792359}
   - component: {fileID: 8058788697072921554}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Andisite
   m_TagString: Untagged
   m_Icon: {fileID: 0}
